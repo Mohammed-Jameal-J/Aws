@@ -531,21 +531,112 @@
     text-align: center;
   }
 
+  /* ─── MOBILE MENU TOGGLE ─── */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    width: 42px; height: 42px;
+    background: var(--gray-900);
+    border: var(--border);
+    border-color: var(--gray-700);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 18px; height: 2px;
+    background: var(--white);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .menu-toggle.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .menu-toggle.active span:nth-child(2) { opacity: 0; }
+  .menu-toggle.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
-    .sidebar { display: none; }
+    .menu-toggle { display: flex; }
+
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      width: 280px;
+      max-width: 82vw;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+    }
+
+    .sidebar.active { transform: translateX(0); }
+
     .main { margin-left: 0; }
     .module { padding: 40px 24px; }
-    .hero { padding: 48px 24px; }
+    .hero { padding: 88px 24px 48px; }
+    .hero-stats { gap: 24px; }
     .def-box { grid-template-columns: 1fr; }
     .def-en { border-right: none; border-bottom: var(--border); border-color: var(--gray-700); }
+    .progress-strip { padding: 12px 24px; }
+    .footer { padding: 32px 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 34px; }
+    .hero-desc { font-size: 14px; }
+    .module { padding: 32px 18px; }
+    .module h2 { font-size: 24px; }
+    .module-icon { width: 40px; height: 40px; font-size: 18px; }
+    .module-header { gap: 14px; margin-bottom: 28px; }
+    .sub-section { margin-top: 32px; }
+    .sub-section h3 { font-size: 17px; flex-wrap: wrap; gap: 8px; }
+    .def-en, .def-ta { padding: 18px 20px; }
+    .example-box, .diagram { padding: 18px 20px; }
+    .topics-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .topic-card { padding: 16px 18px; }
+    .code-block { padding: 16px 18px; font-size: 11px; }
+    th, td { padding: 9px 10px; font-size: 12px; }
+    .hero-stats { gap: 18px 28px; }
+    .stat-num { font-size: 22px; }
+  }
+
+  @media (max-width: 420px) {
+    .hero h1 { font-size: 28px; }
+    .module h2 { font-size: 21px; }
+    .module-tag { font-size: 9px; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .hero-eyebrow { font-size: 10px; }
   }
 </style>
 </head>
 <body>
 
+<!-- ─── MOBILE MENU TOGGLE ─── -->
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <!-- ─── SIDEBAR ─── -->
-<nav class="sidebar">
+<nav class="sidebar" id="sidebar">
   <div class="sidebar-logo"><span>AWS</span> MASTERCLASS v2</div>
 
   <div class="nav-section-label">Foundation</div>
@@ -626,10 +717,10 @@
       Complete guide from zero to production — every concept explained in English &amp; Tamil, with real-world examples and architecture diagrams.
     </p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">28</span><span class="stat-label">Modules</span></div>
+      <div class="stat"><span class="stat-num">30</span><span class="stat-label">Modules</span></div>
       <div class="stat"><span class="stat-num">2</span><span class="stat-label">Languages</span></div>
-      <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Diagrams</span></div>
-      <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Code Blocks</span></div>
+      <div class="stat"><span class="stat-num">40+</span><span class="stat-label">Diagrams</span></div>
+      <div class="stat"><span class="stat-num">70+</span><span class="stat-label">Code Blocks</span></div>
     </div>
   </section>
 
@@ -1564,13 +1655,747 @@ aws rds create-db-instance \
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       MODULE 11 — ECS
+       MODULE 11 — LAMBDA
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="lambda">
+    <div class="module-header">
+      <div class="module-icon">λ</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 11 · Serverless</div>
+        <h2>Lambda — Functions</h2>
+        <div class="module-subtitle">Run Code Without Managing Servers</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">Lambda is AWS's serverless compute service. You upload a small function (code), and AWS runs it only when triggered — by an HTTP request, a file upload, a schedule, or a database change. You never provision or manage a server. You pay only for the milliseconds your code actually executes.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">Lambda என்பது AWS-இன் serverless compute service. நீங்கள் ஒரு சின்ன function (code) upload செய்தால் போதும் — AWS அதை trigger ஆனால் மட்டும் run செய்யும். Server manage செய்ய வேண்டாம். Code எவ்வளவு milliseconds run ஆனதோ, அதற்கு மட்டும் பணம் கட்ட வேண்டும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — Image Resizer:</strong> A photo-sharing app in Coimbatore uses a Lambda function that triggers automatically whenever a user uploads an image to S3. The function resizes the image into 3 sizes (thumbnail, medium, full) and saves them back to S3. No server runs 24/7 — the function only executes for the ~200ms it takes to resize, hundreds of times a day, costing pennies.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Common Triggers <span class="tag">Event Sources</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">API Gateway</div>
+          <div class="topic-card-desc">HTTP request comes in → Lambda runs → returns JSON response. Classic REST API backend, no server needed.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">S3 Event</div>
+          <div class="topic-card-desc">File uploaded/deleted in a bucket → Lambda fires automatically. Great for image processing, virus scans, ETL.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">EventBridge / Schedule</div>
+          <div class="topic-card-desc">Run on a cron schedule — "every day at 2am, clean up old records." Serverless cron jobs.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">DynamoDB Streams</div>
+          <div class="topic-card-desc">A row changes in DynamoDB → Lambda reacts in real time. Used for audit logs, replication, notifications.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Cold Start vs Warm Start <span class="tag">Performance</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">⚡ Lambda Execution Lifecycle</div>
+        <svg class="diagram-svg" viewBox="0 0 660 200" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .lm-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .lm-white { fill: #ccc; }
+          </style>
+          <rect x="20" y="30" width="180" height="140" rx="6" fill="#111" stroke="#333"/>
+          <text x="110" y="55" text-anchor="middle" class="lm-text lm-white">First Request</text>
+          <text x="110" y="90" text-anchor="middle" class="lm-text">1. Download code</text>
+          <text x="110" y="106" text-anchor="middle" class="lm-text">2. Start runtime</text>
+          <text x="110" y="122" text-anchor="middle" class="lm-text">3. Init your handler</text>
+          <text x="110" y="138" text-anchor="middle" class="lm-text">4. Run function</text>
+          <text x="110" y="158" text-anchor="middle" class="lm-text" fill="#888">= Cold Start (~300ms+)</text>
+
+          <line x1="200" y1="100" x2="250" y2="100" stroke="#555" stroke-width="1.5"/>
+          <polygon points="250,96 260,100 250,104" fill="#555"/>
+
+          <rect x="260" y="30" width="180" height="140" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="350" y="55" text-anchor="middle" class="lm-text lm-white">Next Requests</text>
+          <text x="350" y="90" text-anchor="middle" class="lm-text">Environment kept</text>
+          <text x="350" y="106" text-anchor="middle" class="lm-text">"warm" for a while</text>
+          <text x="350" y="122" text-anchor="middle" class="lm-text">Only step 4 runs</text>
+          <text x="350" y="158" text-anchor="middle" class="lm-text" fill="#888">= Warm Start (~5-20ms)</text>
+
+          <line x1="440" y1="100" x2="490" y2="100" stroke="#555" stroke-width="1.5"/>
+          <polygon points="490,96 500,100 490,104" fill="#555"/>
+
+          <rect x="500" y="30" width="140" height="140" rx="6" fill="#111" stroke="#333"/>
+          <text x="570" y="55" text-anchor="middle" class="lm-text lm-white">Idle Timeout</text>
+          <text x="570" y="90" text-anchor="middle" class="lm-text">No requests for</text>
+          <text x="570" y="106" text-anchor="middle" class="lm-text">~10-15 min</text>
+          <text x="570" y="122" text-anchor="middle" class="lm-text">→ container killed</text>
+          <text x="570" y="150" text-anchor="middle" class="lm-text" fill="#888">Next call = Cold</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Deploy a Function <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Write function code (Python example)</span>
+<span class="keyword">def</span> handler(event, context):
+    name = event.get(<span class="string">"name"</span>, <span class="string">"World"</span>)
+    <span class="keyword">return</span> {<span class="string">"statusCode"</span>: 200, <span class="string">"body"</span>: f<span class="string">"Hello, {name}!"</span>}
+
+<span class="comment"># Package and deploy via CLI</span>
+zip function.zip lambda_function.py
+
+aws lambda create-function \
+  --function-name greetUser \
+  --runtime python3.12 \
+  --role arn:aws:iam::123456789:role/lambda-exec-role \
+  --handler lambda_function.handler \
+  --zip-file fileb://function.zip \
+  --timeout 10 \
+  --memory-size 128
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 12 — API GATEWAY
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="apigw">
+    <div class="module-header">
+      <div class="module-icon">🔀</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 12 · Serverless</div>
+        <h2>API Gateway</h2>
+        <div class="module-subtitle">The Front Door for Your APIs</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">API Gateway is a fully managed service that lets you create, publish, and secure REST, HTTP, and WebSocket APIs at any scale. It sits in front of your backend (often Lambda) and handles routing, authentication, throttling, and request/response transformation — so your backend code stays simple.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">API Gateway என்பது உங்கள் APIs-க்கான front door. இது REST/HTTP/WebSocket APIs create செய்ய உதவும். Client-இன் request வந்தவுடன் இது routing, authentication, rate-limiting செய்து, பின்னால் இருக்கும் Lambda-க்கு அனுப்பும். உங்கள் backend code simple-ஆக இருக்கும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — Serverless To-Do App:</strong> A mobile app in Madurai calls <code>POST /todos</code> on API Gateway. API Gateway authenticates the user's JWT token, forwards the request to a Lambda function, which writes to DynamoDB and returns a response — all without a single always-on server.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>API Types <span class="tag">Comparison</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Best For</th><th>Cost</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>HTTP API</td><td>Simple Lambda/HTTP backends</td><td>Cheapest, fastest</td><td>Recommended default for new projects</td></tr>
+            <tr><td>REST API</td><td>Full-featured, enterprise APIs</td><td>Higher cost</td><td>Request validation, API keys, usage plans, caching</td></tr>
+            <tr><td>WebSocket API</td><td>Real-time, bidirectional apps</td><td>Per connection-minute</td><td>Chat apps, live dashboards, notifications</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Request Flow <span class="tag">Architecture</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">🔀 Client → API Gateway → Lambda → DynamoDB</div>
+        <svg class="diagram-svg" viewBox="0 0 660 160" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .ag-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .ag-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="50" width="120" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="70" y="76" text-anchor="middle" class="ag-text ag-white" style="font-size:16px;">📱</text>
+          <text x="70" y="94" text-anchor="middle" class="ag-text">Client App</text>
+
+          <line x1="130" y1="80" x2="180" y2="80" stroke="#555" stroke-width="1.5"/>
+          <polygon points="180,76 190,80 180,84" fill="#555"/>
+
+          <rect x="190" y="50" width="140" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="260" y="76" text-anchor="middle" class="ag-text ag-white" style="font-size:16px;">🔀</text>
+          <text x="260" y="94" text-anchor="middle" class="ag-text">API Gateway</text>
+
+          <line x1="330" y1="80" x2="380" y2="80" stroke="#555" stroke-width="1.5"/>
+          <polygon points="380,76 390,80 380,84" fill="#555"/>
+
+          <rect x="390" y="50" width="120" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="450" y="76" text-anchor="middle" class="ag-text ag-white" style="font-size:16px;">λ</text>
+          <text x="450" y="94" text-anchor="middle" class="ag-text">Lambda</text>
+
+          <line x1="510" y1="80" x2="555" y2="80" stroke="#555" stroke-width="1.5"/>
+          <polygon points="555,76 565,80 555,84" fill="#555"/>
+
+          <rect x="565" y="50" width="85" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="607" y="76" text-anchor="middle" class="ag-text ag-white" style="font-size:16px;">⚡</text>
+          <text x="607" y="94" text-anchor="middle" class="ag-text">DynamoDB</text>
+
+          <text x="330" y="30" text-anchor="middle" class="ag-text" fill="#666">Auth · Throttle · Route</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Create a Route <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Create an HTTP API and connect it to a Lambda function</span>
+aws apigatewayv2 create-api \
+  --name todo-api \
+  --protocol-type HTTP \
+  --target arn:aws:lambda:ap-south-1:123456789:function:greetUser
+
+<span class="comment"># Grant API Gateway permission to invoke the Lambda</span>
+aws lambda add-permission \
+  --function-name greetUser \
+  --statement-id apigw-invoke \
+  --action lambda:InvokeFunction \
+  --principal apigateway.amazonaws.com
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 13 — SQS
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="sqs">
+    <div class="module-header">
+      <div class="module-icon">📬</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 13 · Messaging</div>
+        <h2>SQS — Simple Queue Service</h2>
+        <div class="module-subtitle">Decouple Your Services with Queues</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">SQS is a fully managed message queue. One service (producer) sends messages into the queue; another service (consumer) reads and processes them at its own pace. This decouples your system — if the consumer is slow or briefly down, messages just wait safely in the queue instead of being lost.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">SQS என்பது ஒரு message queue service. ஒரு service (producer) message-ஐ queue-க்கு அனுப்பும்; இன்னொரு service (consumer) அதை படித்து process செய்யும். இதனால் இரண்டு services தனித்தனியாக வேலை செய்யலாம் — consumer கொஞ்சம் தாமதமானாலும் message இழக்காமல் queue-ல் காத்திருக்கும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — Order Processing:</strong> An e-commerce site in Trichy pushes every new order into an SQS queue instantly, so the checkout page responds fast. A separate fleet of worker EC2 instances pulls orders from the queue and processes payment, inventory, and email — even if 10,000 orders arrive in one minute, none are lost.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Standard vs FIFO <span class="tag">Queue Types</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Feature</th><th>Standard Queue</th><th>FIFO Queue</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Order</td><td>Best-effort (not guaranteed)</td><td>Strict First-In-First-Out</td></tr>
+            <tr><td>Delivery</td><td>At-least-once (possible duplicates)</td><td>Exactly-once processing</td></tr>
+            <tr><td>Throughput</td><td>Nearly unlimited</td><td>Up to 3,000 msg/sec (with batching)</td></tr>
+            <tr><td>Use Case</td><td>Logs, notifications, general jobs</td><td>Bank transactions, order sequencing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Producer → Queue → Consumer <span class="tag">Flow</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">📬 SQS Message Flow</div>
+        <svg class="diagram-svg" viewBox="0 0 660 160" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .sq-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .sq-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="50" width="140" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="80" y="76" text-anchor="middle" class="sq-text sq-white" style="font-size:16px;">🛒</text>
+          <text x="80" y="94" text-anchor="middle" class="sq-text">Producer (App)</text>
+
+          <line x1="150" y1="80" x2="200" y2="80" stroke="#555" stroke-width="1.5"/>
+          <polygon points="200,76 210,80 200,84" fill="#555"/>
+          <text x="175" y="70" text-anchor="middle" class="sq-text" fill="#666">SendMessage</text>
+
+          <rect x="210" y="40" width="220" height="80" rx="6" fill="#1a1a1a" stroke="#3a3a3a" stroke-dasharray="5,3"/>
+          <text x="320" y="30" text-anchor="middle" class="sq-text" fill="#666">SQS Queue</text>
+          <rect x="225" y="55" width="45" height="50" rx="4" fill="#111" stroke="#444"/>
+          <rect x="278" y="55" width="45" height="50" rx="4" fill="#111" stroke="#444"/>
+          <rect x="331" y="55" width="45" height="50" rx="4" fill="#111" stroke="#444"/>
+          <rect x="384" y="55" width="35" height="50" rx="4" fill="#111" stroke="#444"/>
+          <text x="320" y="130" text-anchor="middle" class="sq-text" fill="#555">Messages wait safely</text>
+
+          <line x1="430" y1="80" x2="480" y2="80" stroke="#555" stroke-width="1.5"/>
+          <polygon points="480,76 490,80 480,84" fill="#555"/>
+          <text x="455" y="70" text-anchor="middle" class="sq-text" fill="#666">Poll</text>
+
+          <rect x="490" y="50" width="150" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="565" y="76" text-anchor="middle" class="sq-text sq-white" style="font-size:16px;">⚙️</text>
+          <text x="565" y="94" text-anchor="middle" class="sq-text">Consumer (Worker)</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Send & Receive Messages <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Create a queue</span>
+aws sqs create-queue --queue-name order-queue
+
+<span class="comment"># Send a message (producer)</span>
+aws sqs send-message \
+  --queue-url https://sqs.ap-south-1.amazonaws.com/123456789/order-queue \
+  --message-body <span class="string">'{"orderId": 1042, "amount": 899}'</span>
+
+<span class="comment"># Receive & delete a message (consumer)</span>
+aws sqs receive-message --queue-url .../order-queue --max-number-of-messages 5
+aws sqs delete-message --queue-url .../order-queue --receipt-handle <span class="string">"AQEB..."</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 14 — SNS
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="sns">
+    <div class="module-header">
+      <div class="module-icon">📢</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 14 · Messaging</div>
+        <h2>SNS — Simple Notification Service</h2>
+        <div class="module-subtitle">Pub/Sub Fan-Out Messaging</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">SNS is a publish/subscribe messaging service. A publisher sends one message to an SNS <strong>Topic</strong>, and SNS instantly delivers a copy to every subscriber — email, SMS, Lambda, or SQS queues — all at once. It's the opposite of SQS's one-to-one queue: SNS is one-to-many "fan-out."</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">SNS என்பது publish/subscribe messaging service. ஒரு publisher ஒரு message-ஐ SNS <strong>Topic</strong>-க்கு அனுப்பினால், அது subscribe செய்த எல்லோருக்கும் (Email, SMS, Lambda, SQS) ஒரே நேரத்தில் அனுப்பப்படும். SQS ஒன்றுக்கு-ஒன்று queue என்றால், SNS ஒன்றுக்கு-பல "fan-out" messaging.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — Order Confirmation:</strong> When a customer in Salem places an order, the app publishes one message to an SNS topic. Instantly: an SMS is sent to the customer, an email receipt goes to their inbox, a Lambda updates analytics, and the order lands in an SQS queue for the warehouse team — all triggered by that single publish.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Fan-Out Pattern <span class="tag">Architecture</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">📢 One Publish → Many Subscribers</div>
+        <svg class="diagram-svg" viewBox="0 0 660 220" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .sn-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .sn-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="80" width="130" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="75" y="106" text-anchor="middle" class="sn-text sn-white" style="font-size:16px;">🛒</text>
+          <text x="75" y="124" text-anchor="middle" class="sn-text">Publisher</text>
+
+          <line x1="140" y1="110" x2="185" y2="110" stroke="#555" stroke-width="1.5"/>
+          <polygon points="185,106 195,110 185,114" fill="#555"/>
+
+          <rect x="195" y="80" width="120" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="255" y="106" text-anchor="middle" class="sn-text sn-white" style="font-size:16px;">📢</text>
+          <text x="255" y="124" text-anchor="middle" class="sn-text">SNS Topic</text>
+
+          <line x1="315" y1="95" x2="360" y2="30" stroke="#555" stroke-width="1.2"/>
+          <line x1="315" y1="110" x2="360" y2="110" stroke="#555" stroke-width="1.2"/>
+          <line x1="315" y1="125" x2="360" y2="190" stroke="#555" stroke-width="1.2"/>
+
+          <rect x="360" y="5" width="120" height="45" rx="5" fill="#111" stroke="#333"/>
+          <text x="420" y="32" text-anchor="middle" class="sn-text">📧 Email</text>
+
+          <rect x="360" y="88" width="120" height="45" rx="5" fill="#111" stroke="#333"/>
+          <text x="420" y="115" text-anchor="middle" class="sn-text">📱 SMS</text>
+
+          <rect x="360" y="170" width="120" height="45" rx="5" fill="#111" stroke="#333"/>
+          <text x="420" y="197" text-anchor="middle" class="sn-text">📬 SQS Queue</text>
+
+          <line x1="315" y1="105" x2="360" y2="60" stroke="#444" stroke-width="1" stroke-dasharray="3,2"/>
+          <rect x="530" y="46" width="110" height="45" rx="5" fill="#111" stroke="#333"/>
+          <text x="585" y="73" text-anchor="middle" class="sn-text">λ Lambda</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Create Topic & Publish <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Create a topic</span>
+aws sns create-topic --name order-confirmations
+
+<span class="comment"># Subscribe an email address</span>
+aws sns subscribe \
+  --topic-arn arn:aws:sns:ap-south-1:123456789:order-confirmations \
+  --protocol email \
+  --notification-endpoint customer@example.com
+
+<span class="comment"># Publish a message — all subscribers get it instantly</span>
+aws sns publish \
+  --topic-arn arn:aws:sns:ap-south-1:123456789:order-confirmations \
+  --message <span class="string">"Your order #1042 has been confirmed!"</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 15 — DYNAMODB
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="dynamodb">
+    <div class="module-header">
+      <div class="module-icon">⚡</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 15 · NoSQL</div>
+        <h2>DynamoDB — NoSQL Database</h2>
+        <div class="module-subtitle">Serverless, Single-Digit Millisecond Latency</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">DynamoDB is AWS's fully managed NoSQL key-value/document database. Unlike RDS, it doesn't use SQL tables with fixed schemas — you store flexible <strong>Items</strong> (like JSON documents) inside a <strong>Table</strong>, looked up by a <strong>Partition Key</strong>. It scales automatically to massive traffic with consistent single-digit millisecond response times.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">DynamoDB என்பது AWS-இன் NoSQL database. RDS போல fixed schema table இல்லை — <strong>Table</strong>-க்குள் flexible <strong>Items</strong> (JSON document போன்றது) சேமிக்கலாம், <strong>Partition Key</strong> மூலம் தேடலாம். எவ்வளவு traffic வந்தாலும் automatic-ஆக scale ஆகும், millisecond-க்குள் பதில் தரும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — Session Store:</strong> A gaming app in Chennai stores millions of active player sessions in DynamoDB, keyed by <code>playerId</code>. During a viral launch, traffic jumps from 1,000 to 500,000 requests/second — DynamoDB scales automatically with zero manual intervention, no server to resize.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Core Concepts <span class="tag">Fundamentals</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Table</div>
+          <div class="topic-card-desc">A collection of items, similar to a table in SQL — but without a fixed column structure.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Partition Key</div>
+          <div class="topic-card-desc">Unique ID used to look up an item instantly, e.g. userId. Determines which internal partition stores the data.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Sort Key (optional)</div>
+          <div class="topic-card-desc">A second key to organize items within a partition, e.g. orderId sorted by timestamp.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Item</div>
+          <div class="topic-card-desc">A single row/record — a flexible JSON-like document. Different items in the same table can have different attributes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Capacity Modes <span class="tag">Pricing</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Mode</th><th>How It Works</th><th>Best For</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>On-Demand</td><td>Pay per request, auto-scales instantly</td><td>Unpredictable or spiky traffic, new apps</td></tr>
+            <tr><td>Provisioned</td><td>You set read/write capacity units in advance</td><td>Predictable, steady traffic — cheaper at scale</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Put & Get Items <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Create a table</span>
+aws dynamodb create-table \
+  --table-name Players \
+  --attribute-definitions AttributeName=playerId,AttributeType=S \
+  --key-schema AttributeName=playerId,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST
+
+<span class="comment"># Insert an item</span>
+aws dynamodb put-item --table-name Players \
+  --item <span class="string">'{"playerId": {"S": "P1001"}, "score": {"N": "4200"}}'</span>
+
+<span class="comment"># Read an item</span>
+aws dynamodb get-item --table-name Players \
+  --key <span class="string">'{"playerId": {"S": "P1001"}}'</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 16 — CLOUDFRONT
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="cloudfront">
+    <div class="module-header">
+      <div class="module-icon">⚡</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 16 · CDN & SSL</div>
+        <h2>CloudFront — CDN</h2>
+        <div class="module-subtitle">Deliver Content Fast, Worldwide</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">CloudFront is AWS's Content Delivery Network (CDN). It caches copies of your content (images, videos, HTML, API responses) at hundreds of <strong>Edge Locations</strong> around the world, so users get data from a server physically near them — instead of one far-away origin server — resulting in dramatically lower latency.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">CloudFront என்பது AWS-இன் CDN (Content Delivery Network). இது உங்கள் content-ஐ (images, videos, HTML) உலகம் முழுவதும் உள்ள <strong>Edge Locations</strong>-ல் cache செய்யும். User-க்கு அருகில் உள்ள server-லேயே data கிடைக்கும் — தூரத்தில் உள்ள origin server வரை போக வேண்டாம். இதனால் website மிக வேகமாக load ஆகும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — Video Streaming:</strong> An ed-tech platform in Bengaluru stores course videos in S3 (Mumbai). Without a CDN, a student in the US would face high latency. With CloudFront, the video is cached at a US edge location on first request — every student after that streams from a nearby edge, not from Mumbai.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>How Caching Works <span class="tag">Edge Locations</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">⚡ Origin → Edge Cache → User</div>
+        <svg class="diagram-svg" viewBox="0 0 660 180" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .cf-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .cf-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="60" width="120" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="70" y="86" text-anchor="middle" class="cf-text cf-white" style="font-size:16px;">📦</text>
+          <text x="70" y="104" text-anchor="middle" class="cf-text">Origin (S3)</text>
+
+          <line x1="130" y1="90" x2="180" y2="90" stroke="#444" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <text x="155" y="80" text-anchor="middle" class="cf-text" fill="#555">1st request only</text>
+
+          <rect x="180" y="20" width="140" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="250" y="46" text-anchor="middle" class="cf-text cf-white" style="font-size:14px;">⚡ Edge — Mumbai</text>
+          <text x="250" y="64" text-anchor="middle" class="cf-text">Cached copy</text>
+
+          <rect x="180" y="100" width="140" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="250" y="126" text-anchor="middle" class="cf-text cf-white" style="font-size:14px;">⚡ Edge — Virginia</text>
+          <text x="250" y="144" text-anchor="middle" class="cf-text">Cached copy</text>
+
+          <line x1="130" y1="80" x2="180" y2="50" stroke="#444" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <line x1="130" y1="100" x2="180" y2="130" stroke="#444" stroke-width="1.2" stroke-dasharray="3,2"/>
+
+          <line x1="320" y1="50" x2="380" y2="50" stroke="#555" stroke-width="1.5"/>
+          <polygon points="380,46 390,50 380,54" fill="#555"/>
+          <rect x="390" y="20" width="120" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="450" y="46" text-anchor="middle" class="cf-text">🧑 User — India</text>
+          <text x="450" y="64" text-anchor="middle" class="cf-text" fill="#555">Fast, low latency</text>
+
+          <line x1="320" y1="130" x2="380" y2="130" stroke="#555" stroke-width="1.5"/>
+          <polygon points="380,126 390,130 380,134" fill="#555"/>
+          <rect x="390" y="100" width="120" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="450" y="126" text-anchor="middle" class="cf-text">🧑 User — USA</text>
+          <text x="450" y="144" text-anchor="middle" class="cf-text" fill="#555">Fast, low latency</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Key Concepts <span class="tag">Terminology</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Origin</div>
+          <div class="topic-card-desc">The real source of your content — an S3 bucket, EC2 server, or Load Balancer.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Edge Location</div>
+          <div class="topic-card-desc">450+ locations worldwide where CloudFront caches your content close to users.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Cache Behavior</div>
+          <div class="topic-card-desc">Rules that decide what gets cached, for how long, and which path patterns apply.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">TTL</div>
+          <div class="topic-card-desc">Time-To-Live — how long a cached object is served before CloudFront re-checks the origin.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Create a Distribution <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Create a CloudFront distribution in front of an S3 bucket</span>
+aws cloudfront create-distribution \
+  --origin-domain-name my-bucket.s3.amazonaws.com \
+  --default-root-object index.html
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 17 — ACM
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="acm">
+    <div class="module-header">
+      <div class="module-icon">🛡️</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 17 · CDN & SSL</div>
+        <h2>ACM — Certificate Manager</h2>
+        <div class="module-subtitle">Free SSL/TLS Certificates for HTTPS</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-intermediate">⬤ Intermediate</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">ACM (AWS Certificate Manager) provisions, manages, and auto-renews free SSL/TLS certificates. These certificates encrypt traffic between users and your app (HTTPS instead of HTTP). ACM certificates attach to Load Balancers, CloudFront, and API Gateway — you never handle the private key files yourself.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">ACM (AWS Certificate Manager) இலவசமாக SSL/TLS certificates create செய்து, automatic-ஆக renew செய்யும். இந்த certificates உங்கள் website-ஐ HTTPS-ஆக (encrypted) மாற்றும். Load Balancer, CloudFront, API Gateway-ல் இணைக்கலாம் — நீங்களே private key file manage செய்ய வேண்டாம்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> A SaaS company points <code>app.mycompany.com</code> at an Application Load Balancer. They request a free ACM certificate for that domain, validate ownership via a DNS record in Route 53, and attach the certificate to the ALB listener on port 443 — HTTPS is live in minutes, and ACM auto-renews it forever.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>What ACM Handles <span class="tag">Key Points</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Public Certificates</div>
+          <div class="topic-card-desc">Free, trusted by all browsers, for public domains you own.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">DNS Validation</div>
+          <div class="topic-card-desc">Prove domain ownership by adding a CNAME record — Route 53 can do this automatically.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Auto Renewal</div>
+          <div class="topic-card-desc">No expiry emails to worry about — ACM renews before the certificate expires, silently.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Where It Attaches</div>
+          <div class="topic-card-desc">Application Load Balancer, CloudFront, API Gateway custom domains. Not directly on raw EC2.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Request a Certificate <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Request a public certificate with DNS validation</span>
+aws acm request-certificate \
+  --domain-name app.mycompany.com \
+  --validation-method DNS \
+  --subject-alternative-names <span class="string">"*.mycompany.com"</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 18 — ECR
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="ecr">
+    <div class="module-header">
+      <div class="module-icon">📦</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 18 · Containers</div>
+        <h2>ECR — Elastic Container Registry</h2>
+        <div class="module-subtitle">Store & Manage Docker Images</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">ECR is a fully managed Docker container registry — like a private Docker Hub inside AWS. You build a Docker image, push it to an ECR repository, and services like ECS, EKS, or Lambda pull it from there to run your containers. It integrates tightly with IAM for private, secure access.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">ECR என்பது AWS-இன் private Docker container registry — Docker Hub போன்றது, ஆனால் உங்கள் AWS account-க்குள் private-ஆக. நீங்கள் ஒரு Docker image build செய்து ECR-க்கு push செய்யலாம்; பின்னர் ECS, EKS, Lambda அதை pull செய்து container run செய்யும். IAM மூலம் secure access கிடைக்கும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example — CI/CD Pipeline:</strong> Every time a developer in Chennai merges code to main, a GitHub Actions workflow builds a Docker image, tags it with the Git commit SHA, and pushes it to ECR. ECS then pulls that exact image and rolls out a zero-downtime deployment.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Core Concepts <span class="tag">Fundamentals</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Repository</div>
+          <div class="topic-card-desc">A named collection of image versions for one app, e.g. my-app-backend.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Image Tag</div>
+          <div class="topic-card-desc">A label on a specific image version — latest, v1.2.0, or a Git commit hash for traceability.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Push / Pull</div>
+          <div class="topic-card-desc">Docker CLI pushes built images to ECR; ECS/EKS pull them at deploy time.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Lifecycle Policy</div>
+          <div class="topic-card-desc">Automatically delete old, untagged images to save storage costs.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Build, Tag & Push <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Authenticate Docker to your ECR registry</span>
+aws ecr get-login-password --region ap-south-1 | \
+  docker login --username AWS --password-stdin 123456789.dkr.ecr.ap-south-1.amazonaws.com
+
+<span class="comment"># Build, tag, and push the image</span>
+docker build -t my-app-backend .
+docker tag my-app-backend:latest 123456789.dkr.ecr.ap-south-1.amazonaws.com/my-app-backend:latest
+docker push 123456789.dkr.ecr.ap-south-1.amazonaws.com/my-app-backend:latest
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 19 — ECS
   ══════════════════════════════════════════════════════ -->
   <section class="module" id="ecs">
     <div class="module-header">
       <div class="module-icon">🐳</div>
       <div class="module-meta">
-        <div class="module-tag">Module 11 · Containers</div>
+        <div class="module-tag">Module 19 · Containers</div>
         <h2>ECS — Elastic Container Service</h2>
         <div class="module-subtitle">Docker on AWS · Tasks · Services · Clusters</div>
       </div>
@@ -1669,13 +2494,13 @@ aws rds create-db-instance \
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       MODULE 12 — EKS
+       MODULE 20 — EKS
   ══════════════════════════════════════════════════════ -->
   <section class="module" id="eks">
     <div class="module-header">
       <div class="module-icon">☸️</div>
       <div class="module-meta">
-        <div class="module-tag">Module 12 · Kubernetes</div>
+        <div class="module-tag">Module 20 · Kubernetes</div>
         <h2>EKS — Elastic Kubernetes Service</h2>
         <div class="module-subtitle">Pods · Deployments · Services</div>
       </div>
@@ -1802,13 +2627,75 @@ spec:
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       MODULE 13 — CLOUDWATCH
+       MODULE 21 — SECRETS MANAGER
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="secrets">
+    <div class="module-header">
+      <div class="module-icon">🔑</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 21 · Security</div>
+        <h2>Secrets Manager</h2>
+        <div class="module-subtitle">Store & Rotate Passwords, API Keys, Tokens</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">Secrets Manager securely stores sensitive values — database passwords, API keys, OAuth tokens — encrypted at rest. Your application fetches them at runtime via API instead of hardcoding them in source code or config files. It can also automatically rotate database credentials on a schedule, without any downtime.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">Secrets Manager என்பது database passwords, API keys போன்ற sensitive values-ஐ encrypted-ஆக பாதுகாப்பாக சேமிக்கும். Code-ல் நேரடியாக password எழுதாமல், app runtime-ல் API மூலம் fetch செய்யும். Database password-ஐ scheduled-ஆக automatic-ஆக rotate (மாற்றி) செய்யவும் முடியும் — downtime இல்லாமல்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> An RDS-backed app in Chennai stores its database password in Secrets Manager instead of a <code>.env</code> file. Secrets Manager rotates the password every 30 days automatically, updates RDS, and the app fetches the new value at startup — no developer ever sees or manually changes the password.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Secrets Manager vs Alternatives <span class="tag">Comparison</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Option</th><th>Auto Rotation</th><th>Cost</th><th>Best For</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Secrets Manager</td><td>Yes — built-in for RDS</td><td>~$0.40/secret/month</td><td>DB credentials, tokens needing rotation</td></tr>
+            <tr><td>SSM Parameter Store</td><td>No (manual)</td><td>Free (standard tier)</td><td>Config values, non-rotating secrets</td></tr>
+            <tr><td>Env variables / .env file</td><td>No</td><td>Free</td><td>Local dev only — never for production secrets</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Create & Retrieve a Secret <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Store a database password</span>
+aws secretsmanager create-secret \
+  --name prod/myapp/dbpassword \
+  --secret-string <span class="string">'{"username":"admin","password":"S3cur3P@ss"}'</span>
+
+<span class="comment"># Fetch it at runtime (in your app or CI/CD)</span>
+aws secretsmanager get-secret-value \
+  --secret-id prod/myapp/dbpassword \
+  --query SecretString --output text
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 22 — CLOUDWATCH
   ══════════════════════════════════════════════════════ -->
   <section class="module" id="cloudwatch">
     <div class="module-header">
       <div class="module-icon">📊</div>
       <div class="module-meta">
-        <div class="module-tag">Module 13 · Observability</div>
+        <div class="module-tag">Module 22 · Observability</div>
         <h2>CloudWatch</h2>
         <div class="module-subtitle">Logs · Metrics · Monitoring · Alerts · Dashboards</div>
       </div>
@@ -1869,13 +2756,566 @@ aws cloudwatch put-metric-alarm \
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       MODULE 14 — PRODUCTION DEPLOYMENT
+       MODULE 23 — TERRAFORM
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="terraform">
+    <div class="module-header">
+      <div class="module-icon">🏗️</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 23 · IaC & CI/CD</div>
+        <h2>Terraform on AWS</h2>
+        <div class="module-subtitle">Infrastructure as Code</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">Terraform is an open-source Infrastructure-as-Code tool. Instead of clicking around the AWS Console, you describe your infrastructure (EC2, VPC, S3, RDS...) in code files. Terraform reads that code and creates, updates, or destroys real AWS resources to match — the same setup can be reproduced identically, every time.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">Terraform என்பது Infrastructure-as-Code tool. AWS Console-ல் manual-ஆக click செய்யாமல், உங்கள் infrastructure-ஐ (EC2, VPC, S3...) code file-ல் describe செய்யலாம். Terraform அந்த code-ஐ படித்து, real AWS resources create/update/delete செய்யும். இதே setup-ஐ எத்தனை முறை வேண்டுமானாலும் identical-ஆக மறுஉருவாக்கம் செய்யலாம்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> A team in Hyderabad defines their entire staging environment — VPC, EC2, RDS, security groups — as <code>.tf</code> files in Git. To spin up an identical environment for a new client demo, they simply run <code>terraform apply</code> in a new AWS account — the entire infrastructure is rebuilt in minutes, with zero manual clicks.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Core Workflow <span class="tag">Terraform Loop</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Provider</div>
+          <div class="topic-card-desc">Tells Terraform which cloud to talk to — aws, azure, gcp — and which region/credentials to use.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Resource</div>
+          <div class="topic-card-desc">A single infrastructure object you want — an EC2 instance, an S3 bucket, a VPC.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">State File</div>
+          <div class="topic-card-desc">terraform.tfstate tracks what Terraform actually created, so it knows what to change next time.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Plan / Apply</div>
+          <div class="topic-card-desc">`plan` previews changes before making them; `apply` executes them for real.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Sample Configuration <span class="tag">.tf File</span></h3>
+      <div class="code-block">
+<span class="comment"># main.tf — creates one EC2 instance</span>
+<span class="keyword">provider</span> <span class="string">"aws"</span> {
+  region = <span class="string">"ap-south-1"</span>
+}
+
+<span class="keyword">resource</span> <span class="string">"aws_instance"</span> <span class="string">"web"</span> {
+  ami           = <span class="string">"ami-0f5ee92e2d63afc18"</span>
+  instance_type = <span class="string">"t3.micro"</span>
+
+  tags = {
+    Name = <span class="string">"web-server"</span>
+  }
+}
+
+<span class="comment"># Run it:</span>
+<span class="comment"># terraform init    → download AWS provider plugin</span>
+<span class="comment"># terraform plan     → preview what will be created</span>
+<span class="comment"># terraform apply    → create it for real</span>
+<span class="comment"># terraform destroy  → tear it all down</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 24 — CI/CD PIPELINES
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="cicd">
+    <div class="module-header">
+      <div class="module-icon">🔄</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 24 · IaC & CI/CD</div>
+        <h2>CI/CD Pipelines</h2>
+        <div class="module-subtitle">Automate Build, Test & Deploy</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">CI/CD (Continuous Integration / Continuous Deployment) automates the path from code commit to production. Every push to Git triggers automated tests (CI); if they pass, the code is automatically built and deployed (CD) — removing manual, error-prone deployment steps and letting teams ship many times a day, safely.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">CI/CD (Continuous Integration / Continuous Deployment) என்பது code commit முதல் production வரை automatic செய்வது. Git-க்கு push செய்த உடனேயே automated tests run ஆகும் (CI); அவை pass ஆனால் code automatic-ஆக build ஆகி deploy ஆகும் (CD) — manual deployment தவறுகள் இல்லாமல், ஒரு நாளைக்கு பல முறை safely ship செய்யலாம்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> A team in Chennai pushes code to the main branch. A pipeline automatically runs unit tests, builds a Docker image, pushes it to ECR, and deploys it to ECS — all within 4 minutes, with no human touching a server. If tests fail, the deploy never happens.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Pipeline Stages <span class="tag">Flow</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">🔄 Commit → Build → Test → Deploy</div>
+        <svg class="diagram-svg" viewBox="0 0 660 140" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .ci-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .ci-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="40" width="130" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="75" y="66" text-anchor="middle" class="ci-text ci-white" style="font-size:15px;">📝 Commit</text>
+          <text x="75" y="84" text-anchor="middle" class="ci-text">git push</text>
+
+          <line x1="140" y1="70" x2="180" y2="70" stroke="#555" stroke-width="1.5"/>
+          <polygon points="180,66 190,70 180,74" fill="#555"/>
+
+          <rect x="190" y="40" width="120" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="250" y="66" text-anchor="middle" class="ci-text ci-white" style="font-size:15px;">🔨 Build</text>
+          <text x="250" y="84" text-anchor="middle" class="ci-text">Docker image</text>
+
+          <line x1="310" y1="70" x2="350" y2="70" stroke="#555" stroke-width="1.5"/>
+          <polygon points="350,66 360,70 350,74" fill="#555"/>
+
+          <rect x="360" y="40" width="120" height="60" rx="6" fill="#111" stroke="#333"/>
+          <text x="420" y="66" text-anchor="middle" class="ci-text ci-white" style="font-size:15px;">✅ Test</text>
+          <text x="420" y="84" text-anchor="middle" class="ci-text">Unit / Integration</text>
+
+          <line x1="480" y1="70" x2="520" y2="70" stroke="#555" stroke-width="1.5"/>
+          <polygon points="520,66 530,70 520,74" fill="#555"/>
+
+          <rect x="530" y="40" width="120" height="60" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="590" y="66" text-anchor="middle" class="ci-text ci-white" style="font-size:15px;">🚀 Deploy</text>
+          <text x="590" y="84" text-anchor="middle" class="ci-text">ECS / EKS / Lambda</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Tool Options <span class="tag">Comparison</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>Type</th><th>Best For</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GitHub Actions</td><td>SaaS, YAML-based</td><td>Repos already on GitHub — simplest setup</td></tr>
+            <tr><td>AWS CodePipeline</td><td>Native AWS service</td><td>Teams fully invested in the AWS ecosystem</td></tr>
+            <tr><td>Jenkins</td><td>Self-hosted</td><td>Complex, highly customizable enterprise pipelines</td></tr>
+            <tr><td>GitLab CI</td><td>SaaS/self-hosted, YAML-based</td><td>Repos hosted on GitLab</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 25 — CODEPIPELINE / DEPLOY
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="codepipeline">
+    <div class="module-header">
+      <div class="module-icon">🚦</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 25 · IaC & CI/CD</div>
+        <h2>CodePipeline & CodeDeploy</h2>
+        <div class="module-subtitle">AWS-Native CI/CD Services</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">CodePipeline orchestrates your release process as a series of stages (Source → Build → Deploy). It calls <strong>CodeBuild</strong> to compile/test your code and <strong>CodeDeploy</strong> to roll the new version out to EC2, ECS, or Lambda — supporting safe strategies like rolling updates and blue/green deployments.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">CodePipeline உங்கள் release process-ஐ stages-ஆக (Source → Build → Deploy) நடத்தும். <strong>CodeBuild</strong>-ஐ அழைத்து code compile/test செய்யும், <strong>CodeDeploy</strong>-ஐ அழைத்து EC2/ECS/Lambda-க்கு புதிய version-ஐ deploy செய்யும் — rolling updates மற்றும் blue/green deployment போன்ற safe strategies ஆதரிக்கும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> A fintech company in Chennai uses CodePipeline triggered by every commit to their CodeCommit repo. CodeBuild runs tests and builds a Docker image; CodeDeploy then performs a blue/green deployment to ECS — new version gets 10% of traffic first, and if error rates stay low, it's shifted to 100% automatically.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Pipeline Components <span class="tag">Building Blocks</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Source Stage</div>
+          <div class="topic-card-desc">Watches CodeCommit, GitHub, or S3 for new commits/uploads to trigger the pipeline.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">CodeBuild</div>
+          <div class="topic-card-desc">Fully managed build service — compiles code, runs tests, produces deployable artifacts.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">CodeDeploy</div>
+          <div class="topic-card-desc">Automates deployments to EC2, on-premises, Lambda, or ECS with rollback on failure.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Approval Gate</div>
+          <div class="topic-card-desc">Optional manual approval step before deploying to production — a human clicks "Approve."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Build Specification <span class="tag">buildspec.yml</span></h3>
+      <div class="code-block">
+<span class="comment"># buildspec.yml — used by CodeBuild</span>
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Running tests...
+      - npm test
+      - docker build -t my-app .
+      - docker tag my-app:latest $ECR_REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION
+  post_build:
+    commands:
+      - docker push $ECR_REPO:$CODEBUILD_RESOLVED_SOURCE_VERSION
+artifacts:
+  files:
+    - imagedefinitions.json
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 26 — AWS CLI PATTERNS
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="cli">
+    <div class="module-header">
+      <div class="module-icon">⌨️</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 26 · DevOps Daily</div>
+        <h2>AWS CLI Patterns</h2>
+        <div class="module-subtitle">Everyday Commands Every DevOps Engineer Uses</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">The AWS CLI lets you manage any AWS service from the terminal instead of the Console — essential for scripting, automation, and CI/CD. It supports named profiles (multiple accounts), output formatting, and JMESPath queries to filter results without writing extra code.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">AWS CLI மூலம் Console-க்கு போகாமல், terminal-லேயே எந்த AWS service-ஐயும் manage செய்யலாம் — scripting, automation, CI/CD-க்கு அவசியம். Named profiles (பல accounts), output formatting, JMESPath queries மூலம் extra code இல்லாமல் results filter செய்யலாம்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> An SRE in Chennai keeps three CLI profiles — dev, staging, prod. Before every production command, they double-check with <code>aws sts get-caller-identity --profile prod</code> to confirm they're pointed at the right account, avoiding costly mistakes.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Cheatsheet <span class="tag">Daily Commands</span></h3>
+      <div class="code-block">
+<span class="comment"># Configure a named profile</span>
+aws configure --profile prod
+
+<span class="comment"># Check which identity/account you're using</span>
+aws sts get-caller-identity --profile prod
+
+<span class="comment"># List running EC2 instances (filtered, table output)</span>
+aws ec2 describe-instances \
+  --filters <span class="string">"Name=instance-state-name,Values=running"</span> \
+  --query <span class="string">"Reservations[].Instances[].[InstanceId,InstanceType]"</span> \
+  --output table
+
+<span class="comment"># Tail the latest CloudWatch logs</span>
+aws logs tail /ecs/my-app --follow
+
+<span class="comment"># Switch profile & region for a single command</span>
+aws s3 ls --profile staging --region ap-south-1
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Key Habits <span class="tag">Best Practices</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Named Profiles</div>
+          <div class="topic-card-desc">Never mix credentials for different environments in one default profile — always use --profile.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">--query with JMESPath</div>
+          <div class="topic-card-desc">Filter huge JSON responses down to exactly the fields you need, right in the CLI.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Output Formats</div>
+          <div class="topic-card-desc">json (scripts), table (humans), text (piping into other Unix tools).</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">--dry-run</div>
+          <div class="topic-card-desc">Many destructive commands support this flag to preview permissions/impact before running for real.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 27 — COST MANAGEMENT
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="cost">
+    <div class="module-header">
+      <div class="module-icon">💰</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 27 · DevOps Daily</div>
+        <h2>Cost Management</h2>
+        <div class="module-subtitle">Keep Your AWS Bill Under Control</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">AWS bills can spiral quickly if left unmonitored. AWS provides tools — Budgets (alerts before you overspend), Cost Explorer (visualize where money goes), and pricing models like Reserved Instances and Savings Plans — to help you predict, control, and reduce your monthly bill.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">கண்காணிக்காவிட்டால் AWS bill வேகமாக அதிகரிக்கலாம். AWS-ல் Budgets (overspend ஆவதற்கு முன் alert), Cost Explorer (பணம் எங்கு செலவாகுது என்று visualize), Reserved Instances / Savings Plans போன்ற pricing models உள்ளன — இவை மூலம் bill-ஐ predict செய்து, குறைக்கலாம்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> A startup in Chennai sets an AWS Budget alert at ₹50,000/month. When spend hits 80% mid-month, an SNS notification fires to the founder's phone. Cost Explorer then reveals an unused NAT Gateway running 24/7 — deleting it saves ₹3,000/month instantly.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Pricing Models <span class="tag">Compute Purchase Options</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Model</th><th>Discount</th><th>Commitment</th><th>Best For</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>On-Demand</td><td>None (baseline)</td><td>None</td><td>Unpredictable, short-term workloads</td></tr>
+            <tr><td>Reserved Instance</td><td>Up to 72%</td><td>1 or 3 years</td><td>Steady, predictable baseline workloads</td></tr>
+            <tr><td>Savings Plans</td><td>Up to 66%</td><td>1 or 3 years (flexible)</td><td>Predictable spend, flexible instance types</td></tr>
+            <tr><td>Spot Instances</td><td>Up to 90%</td><td>None (can be reclaimed)</td><td>Fault-tolerant batch jobs, CI runners</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Cost Tools <span class="tag">Fundamentals</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Budgets</div>
+          <div class="topic-card-desc">Set a monthly spend limit and get email/SNS alerts at 50%, 80%, 100% thresholds.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Cost Explorer</div>
+          <div class="topic-card-desc">Visual charts breaking down spend by service, region, or tag — spot waste quickly.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Cost Allocation Tags</div>
+          <div class="topic-card-desc">Tag resources by team/project so you know exactly who's spending what.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Trusted Advisor</div>
+          <div class="topic-card-desc">Automatically flags idle load balancers, unattached EBS volumes, and other waste.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 28 — TROUBLESHOOTING
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="debug">
+    <div class="module-header">
+      <div class="module-icon">🔧</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 28 · DevOps Daily</div>
+        <h2>Troubleshooting</h2>
+        <div class="module-subtitle">Diagnosing Common AWS Failures</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Advanced</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">Most production incidents on AWS fall into a handful of recurring patterns — networking misconfigurations, permission errors, or resource limits. Knowing where to look first (CloudWatch Logs, Security Groups, IAM policies) turns a 2-hour outage into a 5-minute fix.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">AWS-ல் production issues பெரும்பாலும் ஒரே மாதிரியான patterns-ஆகவே repeat ஆகும் — networking தவறுகள், permission errors, resource limits. முதலில் எங்கு பார்க்க வேண்டும் (CloudWatch Logs, Security Groups, IAM policies) என்று தெரிந்தால், 2 மணி நேர outage-ஐ 5 நிமிடத்தில் சரி செய்யலாம்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Real Example:</strong> A team's app suddenly returns 502 errors. They check the ALB target group health checks first — instances are marked "unhealthy." CloudWatch Logs reveal the app crashed on an unhandled exception. The real fix was a bad environment variable, found in under 10 minutes by following the chain: ALB → Target Group → CloudWatch Logs.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Common Issues <span class="tag">Symptom → Cause → Fix</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Symptom</th><th>Likely Cause</th><th>Where to Check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Can't SSH into EC2</td><td>Security Group blocking port 22, or wrong key pair</td><td>Security Group inbound rules, key pair name</td></tr>
+            <tr><td>502 Bad Gateway on ALB</td><td>App crashed or failing health checks</td><td>Target Group health status, CloudWatch app logs</td></tr>
+            <tr><td>"Access Denied" API errors</td><td>Missing IAM permission</td><td>IAM policy attached to the role/user; CloudTrail event history</td></tr>
+            <tr><td>Lambda times out</td><td>Timeout set too low, or slow downstream call</td><td>Lambda config → Timeout; CloudWatch Logs for duration</td></tr>
+            <tr><td>RDS connection refused</td><td>Security Group not allowing app's SG, or wrong subnet</td><td>RDS Security Group inbound rules, VPC subnet routing</td></tr>
+            <tr><td>S3 "Access Denied"</td><td>Bucket policy or IAM policy too restrictive</td><td>Bucket Policy, IAM policy, Block Public Access settings</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Debug Commands <span class="tag">CLI</span></h3>
+      <div class="code-block">
+<span class="comment"># Check why an IAM call is denied (simulate the policy)</span>
+aws iam simulate-principal-policy \
+  --policy-source-arn arn:aws:iam::123456789:role/my-role \
+  --action-names s3:GetObject \
+  --resource-arns arn:aws:s3:::my-bucket/*
+
+<span class="comment"># Check ALB target health</span>
+aws elbv2 describe-target-health --target-group-arn arn:aws:elasticloadbalancing:...
+
+<span class="comment"># Stream live application logs</span>
+aws logs tail /ecs/my-app --since 10m --follow
+
+<span class="comment"># See recent account activity (who did what)</span>
+aws cloudtrail lookup-events --max-results 10
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 29 — REAL-TIME WORKFLOWS
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="realworkflow">
+    <div class="module-header">
+      <div class="module-icon">🔁</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 29 · Production</div>
+        <h2>Real-Time Workflows</h2>
+        <div class="module-subtitle">How It All Fits Together, Day to Day</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Master</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">Individually, each AWS service is simple. The real skill is combining them into a working system — a request flows through DNS, CDN, load balancer, compute, database, and observability, with every layer playing its part. This module walks through what actually happens end-to-end when a real user clicks a button in your app.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">ஒவ்வொரு AWS service தனித்தனியாக simple. உண்மையான skill என்பது இவற்றை இணைத்து ஒரு system-ஆக இயக்குவது — ஒரு request DNS, CDN, load balancer, compute, database, monitoring வழியாக பயணிக்கும், ஒவ்வொரு layer-ம் தன் வேலையை செய்யும். User உங்கள் app-ல் ஒரு button click செய்யும்போது real-ஆக என்ன நடக்கிறது என்பதை இந்த module விளக்கும்.</p>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>End-to-End Request Flow <span class="tag">Full Path</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">🔁 What Happens When a User Clicks "Buy Now"</div>
+        <svg class="diagram-svg" viewBox="0 0 660 340" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .rw-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .rw-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="10" width="150" height="40" rx="5" fill="#111" stroke="#333"/>
+          <text x="85" y="35" text-anchor="middle" class="rw-text rw-white">1. Browser → Route 53 (DNS)</text>
+
+          <line x1="85" y1="50" x2="85" y2="70" stroke="#555" stroke-width="1.2"/>
+          <rect x="10" y="70" width="150" height="40" rx="5" fill="#1a1a1a" stroke="#333"/>
+          <text x="85" y="95" text-anchor="middle" class="rw-text rw-white">2. CloudFront (CDN cache)</text>
+
+          <line x1="85" y1="110" x2="85" y2="130" stroke="#555" stroke-width="1.2"/>
+          <rect x="10" y="130" width="150" height="40" rx="5" fill="#111" stroke="#333"/>
+          <text x="85" y="155" text-anchor="middle" class="rw-text rw-white">3. ALB (Load Balancer)</text>
+
+          <line x1="85" y1="170" x2="85" y2="190" stroke="#555" stroke-width="1.2"/>
+          <rect x="10" y="190" width="150" height="40" rx="5" fill="#1a1a1a" stroke="#333"/>
+          <text x="85" y="215" text-anchor="middle" class="rw-text rw-white">4. ECS Task (App Logic)</text>
+
+          <line x1="85" y1="230" x2="85" y2="250" stroke="#555" stroke-width="1.2"/>
+          <rect x="10" y="250" width="150" height="40" rx="5" fill="#111" stroke="#333"/>
+          <text x="85" y="275" text-anchor="middle" class="rw-text rw-white">5. RDS (write order)</text>
+
+          <line x1="160" y1="270" x2="230" y2="270" stroke="#555" stroke-width="1.2"/>
+          <rect x="230" y="250" width="150" height="40" rx="5" fill="#1a1a1a" stroke="#333"/>
+          <text x="305" y="275" text-anchor="middle" class="rw-text rw-white">6. SNS → SQS (fan-out)</text>
+
+          <line x1="305" y1="250" x2="305" y2="230" stroke="#555" stroke-width="1.2"/>
+          <rect x="230" y="190" width="150" height="40" rx="5" fill="#111" stroke="#333"/>
+          <text x="305" y="215" text-anchor="middle" class="rw-text rw-white">7. Lambda (send email)</text>
+
+          <line x1="160" y1="210" x2="230" y2="150" stroke="#555" stroke-width="1.2"/>
+          <rect x="230" y="130" width="150" height="40" rx="5" fill="#1a1a1a" stroke="#333"/>
+          <text x="305" y="155" text-anchor="middle" class="rw-text rw-white">8. CloudWatch logs it all</text>
+
+          <text x="470" y="30" class="rw-text" fill="#666">Every step is independently</text>
+          <text x="470" y="46" class="rw-text" fill="#666">scalable, monitored, and</text>
+          <text x="470" y="62" class="rw-text" fill="#666">recoverable on failure.</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>A DevOps Engineer's Typical Day <span class="tag">Daily Loop</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">Morning — Check Dashboards</div>
+          <div class="topic-card-desc">CloudWatch dashboards, error rates, cost anomalies from overnight batch jobs.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Review PRs — Terraform Plans</div>
+          <div class="topic-card-desc">Review infrastructure changes in pull requests before they apply to production.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Ship — CI/CD Pipeline</div>
+          <div class="topic-card-desc">Merge triggers pipeline: build → test → push to ECR → deploy to ECS/EKS.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Respond — On-Call Alerts</div>
+          <div class="topic-card-desc">CloudWatch Alarm fires via SNS → investigate logs → fix → post-incident review.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 30 — PRODUCTION DEPLOYMENT
   ══════════════════════════════════════════════════════ -->
   <section class="module" id="production">
     <div class="module-header">
       <div class="module-icon">🚀</div>
       <div class="module-meta">
-        <div class="module-tag">Module 14 · Master</div>
+        <div class="module-tag">Module 30 · Master</div>
         <h2>Full Production Deployment</h2>
         <div class="module-subtitle">React + FastAPI + PostgreSQL + Docker + Kubernetes + AWS</div>
       </div>
@@ -2066,5 +3506,40 @@ jobs:
   </footer>
 
 </main>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('menuToggle');
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+
+    function openMenu() {
+      sidebar.classList.add('active');
+      toggle.classList.add('active');
+      overlay.classList.add('active');
+    }
+
+    function closeMenu() {
+      sidebar.classList.remove('active');
+      toggle.classList.remove('active');
+      overlay.classList.remove('active');
+    }
+
+    toggle.addEventListener('click', function () {
+      if (sidebar.classList.contains('active')) { closeMenu(); } else { openMenu(); }
+    });
+
+    overlay.addEventListener('click', closeMenu);
+
+    var navLinks = sidebar.querySelectorAll('.nav-item');
+    for (var i = 0; i < navLinks.length; i++) {
+      navLinks[i].addEventListener('click', closeMenu);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeMenu(); }
+    });
+  })();
+</script>
 </body>
 </html>
