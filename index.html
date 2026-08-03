@@ -486,6 +486,66 @@
   /* ─── TABLE ─── */
   .table-wrap { overflow-x: auto; margin-bottom: 28px; }
 
+  .quiz-item {
+    background: var(--gray-900);
+    border: var(--border);
+    border-color: var(--gray-700);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .quiz-domain {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ff9933;
+    border: 1px solid rgba(255,153,51,0.35);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 10px;
+  }
+
+  .quiz-q {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    font-size: 13.5px;
+    color: var(--gray-400);
+    line-height: 2;
+    margin-bottom: 14px;
+  }
+
+  .quiz-answer {
+    font-size: 13.5px;
+    color: var(--gray-300);
+    border-top: var(--border);
+    border-color: var(--gray-700);
+    padding-top: 12px;
+    line-height: 1.6;
+  }
+
+  .quiz-answer strong {
+    color: #4ade80;
+  }
+
+  .table-wrap a, .def-text a, .example-box a {
+    color: #ff9933;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,153,51,0.35);
+  }
+
+  .table-wrap a:hover, .def-text a:hover, .example-box a:hover {
+    border-bottom-color: #ff9933;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -726,6 +786,9 @@
   <div class="nav-section-label">Reference</div>
   <a href="#toolguide" class="nav-item">🧭 Which Tool, When? <span class="nav-badge">ref</span></a>
 
+  <div class="nav-section-label">Career</div>
+  <a href="#certification" class="nav-item">🎓 Certification Roadmap <span class="nav-badge">ref</span></a>
+
 </nav>
 
 <!-- ─── MAIN ─── -->
@@ -739,9 +802,9 @@
       Complete guide from zero to production — every concept explained in English &amp; Tamil, with real-world examples and architecture diagrams.
     </p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">43</span><span class="stat-label">Modules</span></div>
+      <div class="stat"><span class="stat-num">44</span><span class="stat-label">Modules</span></div>
       <div class="stat"><span class="stat-num">2</span><span class="stat-label">Languages</span></div>
-      <div class="stat"><span class="stat-num">19</span><span class="stat-label">Diagrams</span></div>
+      <div class="stat"><span class="stat-num">20</span><span class="stat-label">Diagrams</span></div>
       <div class="stat"><span class="stat-num">35+</span><span class="stat-label">Code Blocks</span></div>
     </div>
   </section>
@@ -859,6 +922,22 @@
           <div class="topic-card-desc">Use ready-made software. Like staying in a hotel. Example: Gmail, Zoom, Salesforce.</div>
         </div>
       </div>
+
+      <p style="color:var(--gray-500); font-size:14px; margin:20px 0 16px;">The real difference between the three is <strong>who is responsible for what</strong>. As you move from IaaS → PaaS → SaaS, AWS takes over more of the work — and you lose some control in exchange.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Responsibility</th><th>IaaS (e.g. EC2)</th><th>PaaS (e.g. Elastic Beanstalk)</th><th>SaaS (e.g. Gmail)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Application code</td><td>You manage</td><td>You manage</td><td>Provider manages</td></tr>
+            <tr><td>Runtime (Node/Python/Java)</td><td>You manage</td><td>Provider manages</td><td>Provider manages</td></tr>
+            <tr><td>Operating System</td><td>You manage</td><td>Provider manages</td><td>Provider manages</td></tr>
+            <tr><td>Servers / Virtualization</td><td>Provider manages</td><td>Provider manages</td><td>Provider manages</td></tr>
+            <tr><td>What you actually touch</td><td>Everything above the hypervisor</td><td>Just your code</td><td>Just the app's settings</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -907,6 +986,30 @@
             <tr><td>Speed to Market</td><td>வேகமாக product launch செய்யலாம்</td><td>Start in minutes, not months</td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="sub-section">
+      <h3>Same Idea, Different Name <span class="tag">AWS vs Azure vs Google Cloud</span></h3>
+      <p style="color:var(--gray-500); font-size:14px; margin-bottom:16px;">Every major cloud does roughly the same set of jobs — compute, storage, databases, networking — they just brand the services differently. If you already know AWS, you already understand 90% of Azure or Google Cloud conceptually; only the names change.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>What It Does</th><th>AWS</th><th>Microsoft Azure</th><th>Google Cloud</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Virtual server (rent a computer)</td><td>EC2</td><td>Virtual Machines</td><td>Compute Engine</td></tr>
+            <tr><td>Object storage (files, images, backups)</td><td>S3</td><td>Blob Storage</td><td>Cloud Storage</td></tr>
+            <tr><td>Distribute traffic across servers</td><td>ELB / ALB / NLB</td><td>Azure Load Balancer / Application Gateway</td><td>Cloud Load Balancing</td></tr>
+            <tr><td>Managed relational database</td><td>RDS</td><td>Azure SQL Database</td><td>Cloud SQL</td></tr>
+            <tr><td>Run code without servers</td><td>Lambda</td><td>Azure Functions</td><td>Cloud Functions</td></tr>
+            <tr><td>Managed Kubernetes</td><td>EKS</td><td>AKS</td><td>GKE</td></tr>
+            <tr><td>Private network</td><td>VPC</td><td>Virtual Network (VNet)</td><td>VPC</td></tr>
+            <tr><td>Identity & access control</td><td>IAM</td><td>Azure Active Directory / Entra ID</td><td>Cloud IAM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-box" style="margin-top:16px;">
+        <p><strong>Note on Zoho:</strong> Zoho is not really in the same category as AWS, Azure, or Google Cloud. Zoho is primarily a <strong>SaaS company</strong> — it builds ready-to-use business apps (Zoho Mail, Zoho CRM, Zoho Books) that run on its own infrastructure. It doesn't sell general-purpose IaaS building blocks like "rent a virtual server" or "rent object storage" to the public the way AWS/Azure/GCP do. So if someone mentions Zoho alongside AWS/Azure/GCP, they're usually comparing a finished product (SaaS) to raw infrastructure (IaaS) — useful to know, but not a like-for-like comparison.</p>
       </div>
     </div>
   </section>
@@ -1948,6 +2051,29 @@ aws elasticache create-cache-cluster \
 
     <div class="example-box">
       <p><strong>Big Billion Day / Flipkart Sale:</strong> Flipkart's servers handle 50,000 orders/minute on normal days. On Big Billion Day, it spikes to 5,00,000/minute — 10x more. With Auto Scaling, Flipkart's ASG adds 90 more EC2 instances automatically when CPU usage crosses 70%. The Load Balancer spreads traffic evenly. After the sale ends, the extra instances are terminated. Flipkart only pays for the extra servers for those 12 hours.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Is ALB the Same as an Nginx Reverse Proxy? <span class="tag">Common Confusion</span></h3>
+      <p style="color:var(--gray-500); font-size:14px; margin-bottom:16px;">Short answer: <strong>they solve overlapping problems, but ALB is not "just Nginx in the cloud."</strong> Nginx (used as a reverse proxy) sits in front of your app servers and forwards requests — that's genuinely similar to what a Load Balancer does. But ALB is a fully managed AWS service, while Nginx is software you install, configure, patch, and scale yourself.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Aspect</th><th>AWS Load Balancer (ALB/NLB)</th><th>Nginx Reverse Proxy</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Who manages it</td><td>Fully managed by AWS — no server to patch or scale</td><td>You manage it — it's a process running on a server (or container) you own</td></tr>
+            <tr><td>Scaling</td><td>Auto-scales itself to handle any traffic level</td><td>You must scale it — run it behind another LB, or scale the instance it's on</td></tr>
+            <tr><td>High Availability</td><td>Spans multiple AZs by default</td><td>Single point of failure unless you set up multiple Nginx instances yourself</td></tr>
+            <tr><td>Integration</td><td>Native hooks into Auto Scaling, ACM, WAF, CloudWatch, Target Groups</td><td>Needs manual config/scripting to integrate with cloud-native tooling</td></tr>
+            <tr><td>Flexibility</td><td>Good for standard routing, health checks, SSL termination</td><td>Extremely configurable — custom caching rules, rewrites, rate-limiting logic, Lua scripting</td></tr>
+            <tr><td>Cost model</td><td>Pay per hour + per GB processed</td><td>Free (open-source) — but you pay for the EC2 instance running it</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-box" style="margin-top:16px;">
+        <p><strong>How they're actually used together:</strong> A very common real-world pattern is <em>both at once</em> — an ALB sits at the edge (handling SSL, health checks, and distributing across Availability Zones), and behind it, each EC2 instance or container runs its own Nginx to do fine-grained request routing, caching, or serving static files locally before the request hits the actual app. So it's less "ALB vs Nginx" and more "ALB replaces the need to manually run and scale your own Nginx load-balancing layer — but Nginx still has a place doing things ALB doesn't."</p>
+      </div>
     </div>
   </section>
 
@@ -4498,6 +4624,122 @@ jobs:
     </div>
 
     <div class="sub-section">
+      <h3>Complete Production Architecture <span class="tag">Real-World Scale</span></h3>
+      <p style="color:var(--gray-500); font-size:14px; margin-bottom:16px;">The Notes app above is deliberately simple. Here's what the <strong>same idea</strong> looks like once it needs to survive real production traffic — a private VPC, a container-based backend across multiple Availability Zones, a Multi-AZ database, a cache, an async queue, and centralized logging. Every box here is a module you've already learned.</p>
+      <div class="diagram">
+        <div class="diagram-title">🚀 Complete Production Architecture — VPC, Multi-AZ, Kubernetes</div>
+        <svg class="diagram-svg" viewBox="0 0 920 700" xmlns="http://www.w3.org/2000/svg" style="max-width:920px;">
+          <style>
+            .pa-text { font-family: 'JetBrains Mono', monospace; fill: #888; font-size: 11px; }
+            .pa-white { fill: #ddd; font-size: 12px; }
+            .pa-dim { fill: #555; font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; }
+            .pa-box { fill: #111; stroke: #333; }
+            .pa-box2 { fill: #1a1a1a; stroke: #3a3a3a; }
+            .pa-zone { fill: none; stroke: #2a2a2a; stroke-dasharray: 5,4; }
+          </style>
+
+          <!-- Route 53 -->
+          <rect x="380" y="10" width="160" height="46" rx="6" class="pa-box"/>
+          <text x="460" y="30" text-anchor="middle" class="pa-text pa-white">🔗 Route 53</text>
+          <text x="460" y="46" text-anchor="middle" class="pa-text">myapp.com</text>
+
+          <!-- arrows down to frontend + backend entry -->
+          <line x1="420" y1="56" x2="230" y2="88" stroke="#555" stroke-width="1.3"/>
+          <polygon points="222,90 233,84 232,95" fill="#555"/>
+          <line x1="500" y1="56" x2="700" y2="88" stroke="#555" stroke-width="1.3"/>
+          <polygon points="708,90 697,84 698,95" fill="#555"/>
+
+          <!-- CloudFront + S3 -->
+          <rect x="60" y="92" width="280" height="76" rx="6" class="pa-box2"/>
+          <text x="200" y="114" text-anchor="middle" class="pa-text pa-white">⚡ CloudFront + 📦 S3</text>
+          <text x="200" y="132" text-anchor="middle" class="pa-text">React Build (Static Files)</text>
+          <text x="200" y="150" text-anchor="middle" class="pa-text" style="font-size:9px;">app.myapp.com → CDN → S3 Bucket</text>
+
+          <!-- ALB -->
+          <rect x="580" y="92" width="280" height="76" rx="6" class="pa-box2"/>
+          <text x="720" y="114" text-anchor="middle" class="pa-text pa-white">⚖️ Application Load Balancer</text>
+          <text x="720" y="132" text-anchor="middle" class="pa-text">api.myapp.com</text>
+          <text x="720" y="150" text-anchor="middle" class="pa-text" style="font-size:9px;">HTTPS · WAF · SSL Termination</text>
+
+          <!-- dashed: frontend JS calls API -->
+          <line x1="340" y1="130" x2="580" y2="130" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="460" y="122" text-anchor="middle" class="pa-text" style="font-size:9px;" fill="#555">frontend fetch() → API</text>
+
+          <!-- VPC container -->
+          <rect x="40" y="190" width="840" height="460" rx="8" class="pa-zone"/>
+          <text x="56" y="212" class="pa-text pa-dim">VPC 10.0.0.0/16 — ap-south-1</text>
+
+          <!-- arrow ALB -> into VPC / EKS -->
+          <line x1="720" y1="168" x2="720" y2="200" stroke="#555" stroke-width="1.3"/>
+          <line x1="480" y1="410" x2="720" y2="200" stroke="#555" stroke-width="1.3"/>
+          <polygon points="474,412 486,406 484,418" fill="#555"/>
+
+          <!-- Public Subnet -->
+          <rect x="70" y="225" width="780" height="100" rx="6" class="pa-zone" stroke="#3a3a3a"/>
+          <text x="86" y="244" class="pa-text pa-dim">Public Subnet</text>
+
+          <rect x="100" y="255" width="190" height="55" rx="6" class="pa-box"/>
+          <text x="195" y="278" text-anchor="middle" class="pa-text pa-white">🔀 NAT Gateway</text>
+          <text x="195" y="294" text-anchor="middle" class="pa-text" style="font-size:9px;">Outbound only</text>
+
+          <rect x="320" y="255" width="190" height="55" rx="6" class="pa-box"/>
+          <text x="415" y="278" text-anchor="middle" class="pa-text pa-white">🔒 Bastion Host</text>
+          <text x="415" y="294" text-anchor="middle" class="pa-text" style="font-size:9px;">SSH Jump Server</text>
+
+          <!-- dashed private -> NAT (outbound updates) -->
+          <line x1="195" y1="345" x2="195" y2="310" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+          <!-- dashed bastion -> EKS (admin ssh) -->
+          <line x1="415" y1="310" x2="415" y2="345" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+
+          <!-- Private Subnet -->
+          <rect x="70" y="345" width="780" height="280" rx="6" class="pa-zone" stroke="#3a3a3a"/>
+          <text x="86" y="364" class="pa-text pa-dim">Private Subnet — No internet access</text>
+
+          <rect x="100" y="380" width="180" height="65" rx="6" class="pa-box"/>
+          <text x="190" y="405" text-anchor="middle" class="pa-text pa-white">☸️ EKS Node 1</text>
+          <text x="190" y="422" text-anchor="middle" class="pa-text" style="font-size:9px;">FastAPI Pods</text>
+
+          <rect x="300" y="380" width="180" height="65" rx="6" class="pa-box"/>
+          <text x="390" y="405" text-anchor="middle" class="pa-text pa-white">☸️ EKS Node 2</text>
+          <text x="390" y="422" text-anchor="middle" class="pa-text" style="font-size:9px;">FastAPI Pods</text>
+
+          <rect x="500" y="380" width="185" height="65" rx="6" class="pa-box2"/>
+          <text x="592" y="403" text-anchor="middle" class="pa-text pa-white">🗄️ RDS Primary</text>
+          <text x="592" y="419" text-anchor="middle" class="pa-text" style="font-size:9px;">PostgreSQL Multi-AZ</text>
+
+          <rect x="705" y="380" width="135" height="65" rx="6" class="pa-box2"/>
+          <text x="772" y="403" text-anchor="middle" class="pa-text pa-white">🗄️ RDS Standby</text>
+          <text x="772" y="419" text-anchor="middle" class="pa-text" style="font-size:9px;">AZ-1b replica</text>
+          <line x1="685" y1="412" x2="705" y2="412" stroke="#555" stroke-width="1.2"/>
+          <text x="695" y="404" text-anchor="middle" class="pa-text" style="font-size:8px;" fill="#666">sync</text>
+
+          <rect x="500" y="470" width="185" height="65" rx="6" class="pa-box2"/>
+          <text x="592" y="493" text-anchor="middle" class="pa-text pa-white">⚡ ElastiCache Redis</text>
+          <text x="592" y="509" text-anchor="middle" class="pa-text" style="font-size:9px;">Session / Cache</text>
+
+          <rect x="705" y="470" width="135" height="65" rx="6" class="pa-box2"/>
+          <text x="772" y="493" text-anchor="middle" class="pa-text pa-white">📬 SQS Queue</text>
+          <text x="772" y="509" text-anchor="middle" class="pa-text" style="font-size:9px;">Async Jobs</text>
+          <text x="772" y="522" text-anchor="middle" class="pa-text" style="font-size:8px;" fill="#666">Email / Notifications</text>
+
+          <!-- EKS nodes fan out to RDS / Cache / SQS -->
+          <line x1="390" y1="412" x2="500" y2="412" stroke="#555" stroke-width="1.2"/>
+          <line x1="390" y1="430" x2="500" y2="502" stroke="#555" stroke-width="1.2"/>
+          <line x1="390" y1="440" x2="705" y2="500" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+
+          <!-- CloudWatch bar -->
+          <rect x="40" y="660" width="840" height="34" rx="6" fill="#0d0d0d" stroke="#333"/>
+          <text x="460" y="682" text-anchor="middle" class="pa-text pa-white">📊 CloudWatch — Logs · Metrics · Alarms · Dashboards</text>
+          <text x="460" y="694" text-anchor="middle" class="pa-text" style="font-size:8px;" fill="#555">All AWS services stream here automatically · IAM controls who sees what</text>
+
+          <line x1="200" y1="168" x2="200" y2="660" stroke="#333" stroke-width="1" stroke-dasharray="2,3"/>
+          <line x1="720" y1="168" x2="720" y2="660" stroke="#333" stroke-width="1" stroke-dasharray="2,3"/>
+          <line x1="592" y1="445" x2="592" y2="660" stroke="#333" stroke-width="1" stroke-dasharray="2,3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-section">
       <h3>Frontend — React Calling the API <span class="tag">Code</span></h3>
       <div class="code-block">
 <span class="comment">// src/api.js — talks to our API Gateway endpoint</span>
@@ -4711,6 +4953,409 @@ aws lambda update-function-code \
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 44 — AWS CERTIFICATION ROADMAP
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="certification">
+    <div class="module-header">
+      <div class="module-icon">🎓</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 44 · Career</div>
+        <h2>AWS Certification Roadmap</h2>
+        <div class="module-subtitle">Where to Learn Free, What It Costs to Get Certified</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Reference</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">AWS offers 12 official certifications across 4 tiers — Foundational, Associate, Professional, and Specialty. Every exam has free study material through <strong>AWS Skill Builder</strong>, but the exam itself always costs money (AWS never runs official free certification exams). This module covers exactly where to study for free, and what each exam costs in USD.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">AWS-ல் 4 tiers-ஆக 12 official certifications உள்ளன — Foundational, Associate, Professional, Specialty. ஒவ்வொரு exam-க்கும் <strong>AWS Skill Builder</strong> மூலம் இலவச study material உள்ளது, ஆனால் exam fee எப்போதும் கட்ண வேண்டும் (AWS இலவச certification exam நடத்தாது). இலவசமாக எங்கு படிக்கலாம், ஒவ்வொரு exam-க்கும் எவ்வளவு செலவாகும் என்பதை இந்த module விளக்கும்.</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <p><strong>Important:</strong> The <em>certification exam itself is never free</em> — anyone claiming to offer a free official AWS certification is not legitimate. What <em>is</em> genuinely free is all the study material to prepare for it. The only real cost is the one-time exam fee below.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Direct Links — Bookmark These <span class="tag">Official AWS Pages</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Resource</th><th>Link</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AWS Skill Builder (main learning hub, free courses)</td><td><a href="https://skillbuilder.aws/" target="_blank" rel="noopener">skillbuilder.aws</a></td></tr>
+            <tr><td>AWS Cloud Practitioner Essentials (free course)</td><td><a href="https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials/8D79F3AVR7" target="_blank" rel="noopener">skillbuilder.aws/.../cloud-practitioner-essentials</a></td></tr>
+            <tr><td>Official Certification Overview (all 12 exams)</td><td><a href="https://aws.amazon.com/certification/" target="_blank" rel="noopener">aws.amazon.com/certification</a></td></tr>
+            <tr><td>Official Exam Prep Hub (per-exam free resources)</td><td><a href="https://aws.amazon.com/certification/certification-prep/" target="_blank" rel="noopener">aws.amazon.com/certification/certification-prep</a></td></tr>
+            <tr><td>AWS Training main page</td><td><a href="https://aws.amazon.com/training/" target="_blank" rel="noopener">aws.amazon.com/training</a></td></tr>
+            <tr><td>AWS Educate (students / career-starters)</td><td><a href="https://aws.amazon.com/education/awseducate/" target="_blank" rel="noopener">aws.amazon.com/education/awseducate</a></td></tr>
+            <tr><td>AWS Free Tier (hands-on practice, 12 months free)</td><td><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">aws.amazon.com/free</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--gray-500); font-size:13px; margin-top:12px;">All links go to official AWS domains — no third-party resellers. Bookmark <strong>skillbuilder.aws</strong>; it's the one place you'll return to for every exam.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Where to Study — 100% Free <span class="tag">Official Sources</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Skill Builder</div>
+          <div class="topic-card-desc">skillbuilder.aws — 900+ free self-paced digital courses, official exam prep courses, and free practice question sets for every certification. Start here.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Cloud Practitioner Essentials</div>
+          <div class="topic-card-desc">A free official course covering the entire Cloud Practitioner exam — the standard free starting point for beginners.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Educate</div>
+          <div class="topic-card-desc">Free cloud training and labs for students and career-starters (age 13+), plus a job board for cloud roles.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Whitepapers & FAQs</div>
+          <div class="topic-card-desc">Free official architecture and Well-Architected Framework documents — heavily referenced in Associate & Professional exams.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Free Tier</div>
+          <div class="topic-card-desc">12 months of free hands-on practice on real AWS services (EC2, S3, RDS, Lambda) — nothing replaces actually building.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">AWS Events & re:Invent</div>
+          <div class="topic-card-desc">AWS Summits and re:Invent regularly hand out free practice-exam vouchers and occasional exam discount codes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Certification Tiers & Exam Cost <span class="tag">USD, 2026</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Tier</th><th>Example Certifications</th><th>Exam Fee</th><th>Prerequisites</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Foundational</td><td>Cloud Practitioner, AI Practitioner</td><td>$100</td><td>None</td></tr>
+            <tr><td>Associate</td><td>Solutions Architect, Developer, SysOps Admin, Data Engineer, ML Engineer</td><td>$150</td><td>None (recommended: 6+ months hands-on)</td></tr>
+            <tr><td>Professional</td><td>Solutions Architect Pro, DevOps Engineer Pro</td><td>$300</td><td>Associate-level experience strongly recommended</td></tr>
+            <tr><td>Specialty</td><td>Security, Networking, Machine Learning, Data Analytics</td><td>$300</td><td>Deep hands-on experience in that domain</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--gray-500); font-size:13px; margin-top:12px;">Prices are the flat AWS global rate; local sales tax may be added depending on your country. These rates have held steady for several years.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Cut the Cost — Real Ways to Save <span class="tag">Money-Saving Tips</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">50% Retake/Next-Exam Voucher</div>
+          <div class="topic-card-desc">Every time you pass an exam, AWS emails a 50%-off voucher for your next one — valid ~1 year. Chaining these cuts a 3-exam path from ~$550 to ~$325.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Employer Reimbursement</div>
+          <div class="topic-card-desc">Most companies with a cloud team reimburse certification fees — check your L&D/training budget before paying out of pocket.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Free Practice Exams First</div>
+          <div class="topic-card-desc">Use AWS Skill Builder's free official practice question sets before spending on any paid practice test bundle.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">Start at Foundational</div>
+          <div class="topic-card-desc">Cloud Practitioner is the cheapest exam ($100) and unlocks your first 50%-off voucher for the next, pricier exam.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>A Realistic Certification Path <span class="tag">Example Ladder</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Step</th><th>Certification</th><th>Full Price</th><th>With Voucher</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Cloud Practitioner (CLF-C02)</td><td>$100</td><td>$100 (first exam)</td></tr>
+            <tr><td>2</td><td>Solutions Architect Associate (SAA-C03)</td><td>$150</td><td>$75</td></tr>
+            <tr><td>3</td><td>Solutions Architect Professional (SAP-C02)</td><td>$300</td><td>$150</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--gray-500); font-size:13px; margin-top:12px;">Total: $550 full price vs ~$325 chaining vouchers. A typical Cloud Practitioner → SAA-C03 → SAP-C02 journey takes about 12–18 months, including real hands-on AWS work before attempting the Professional exam.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>Free vs Paid — Honest Comparison <span class="tag">What You Actually Need</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Resource</th><th>Cost</th><th>Worth It?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AWS Skill Builder digital courses</td><td>Free</td><td>Yes — start here, covers every exam objective</td></tr>
+            <tr><td>AWS Official Practice Question Sets</td><td>Free</td><td>Yes — always do these before paying for anything</td></tr>
+            <tr><td>AWS Skill Builder subscription (labs, full practice exams)</td><td>~$29/month</td><td>Optional — useful for hands-on labs at Associate+ level</td></tr>
+            <tr><td>Third-party video course (Udemy, etc.)</td><td>$15–200</td><td>Optional — helpful if you prefer structured video teaching</td></tr>
+            <tr><td>The exam itself</td><td>$100–$300</td><td>Mandatory — no way around this, ever</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Exam Format — What to Actually Expect <span class="tag">Cloud Practitioner (CLF-C02)</span></h3>
+      <p style="color:var(--gray-500); font-size:14px; margin-bottom:16px;">Using the entry-level Cloud Practitioner exam as the reference point, since it's where almost everyone starts. The format is broadly similar for Associate exams too (more questions, more depth).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Detail</th><th>What It Is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total questions</td><td>65 (50 scored + 15 unscored, mixed in — you can't tell which is which)</td></tr>
+            <tr><td>Time limit</td><td>90 minutes</td></tr>
+            <tr><td>Question types</td><td>Multiple choice (1 correct answer) and multiple response (2+ correct answers)</td></tr>
+            <tr><td>Scoring</td><td>Scaled score 100–1000; you need <strong>700+</strong> to pass</td></tr>
+            <tr><td>Format</td><td>Pearson VUE testing center, or online proctored from home</td></tr>
+            <tr><td>Validity</td><td>Certification is valid for 3 years, then you must recertify</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap" style="margin-top:16px;">
+        <table>
+          <thead>
+            <tr><th>Domain</th><th>Weight</th><th>Covers</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Cloud Concepts</td><td>24%</td><td>Value of cloud, deployment models, Well-Architected Framework basics</td></tr>
+            <tr><td>2. Security & Compliance</td><td>30%</td><td>Shared Responsibility Model, IAM, compliance, encryption basics</td></tr>
+            <tr><td>3. Cloud Technology & Services</td><td>34%</td><td>Compute, storage, database, networking — which service fits which use case</td></tr>
+            <tr><td>4. Billing, Pricing & Support</td><td>12%</td><td>Pricing models, Free Tier, support plans, cost tools</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--gray-500); font-size:13px; margin-top:12px;">Notice Security (30%) + Cloud Technology (34%) = <strong>64% of the entire exam</strong>. Most people who fail underestimate the Security & Compliance domain — it's almost as big as Cloud Technology.</p>
+    </div>
+
+    <div class="sub-section">
+      <h3>AWS Account Signup, Free Credits & the Credit Card Question <span class="tag">Read This First</span></h3>
+      <div class="example-box">
+        <p><strong>Straight answer on the credit card:</strong> Yes, AWS requires a valid card to create <em>any</em> account — Free plan or Paid plan, there's no way around it. It's used for identity verification (a small temporary authorization, usually refunded/released within days), not an automatic charge. As long as you stay within your free credits and the "Always Free" service limits, <strong>you will not be charged</strong>. The real risk isn't adding the card — it's forgetting to shut down a resource after you're done practicing.</p>
+      </div>
+      <p style="color:var(--gray-500); font-size:14px; margin:16px 0;">One correction on the amount: as of AWS's July 2025 Free Tier update, new accounts get <strong>$100 in credits immediately at sign-up, plus up to $100 more</strong> (in $20 chunks) for completing 5 onboarding tasks like launching an EC2 instance or setting a budget — <strong>up to $200 total</strong>, not $300. (If you've heard "$300 free," that's usually Google Cloud's free trial offer being mixed up with AWS's — they're different providers with different numbers.)</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>What You Get</th><th>Detail</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sign-up credit</td><td>$100, applied instantly to any new account</td></tr>
+            <tr><td>Onboarding bonus credits</td><td>Up to $100 more, $20 per task (5 tasks: EC2, RDS, Lambda, Bedrock, set a Budget)</td></tr>
+            <tr><td>Free Plan duration</td><td>Up to 6 months, or until credits run out — whichever comes first</td></tr>
+            <tr><td>Always Free services</td><td>30+ services stay free forever within monthly limits (e.g. Lambda's 1M free requests/month), independent of the credit balance</td></tr>
+            <tr><td>After credits/6 months end</td><td>Upgrade to Paid Plan (pay normal rates) or the account simply stops working on Free Plan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>How to Register — Step by Step <span class="tag">Account Creation</span></h3>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">1. Go to aws.amazon.com/free</div>
+          <div class="topic-card-desc">Click "Create a Free Account." Enter your email and choose an AWS account name.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">2. Verify your email</div>
+          <div class="topic-card-desc">AWS sends a one-time code to confirm the email is real before continuing.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">3. Add contact information</div>
+          <div class="topic-card-desc">Choose Personal or Business account, then fill in your name, phone, and address.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">4. Add a payment method</div>
+          <div class="topic-card-desc">A debit or credit card is mandatory here — this is the step that can't be skipped, on any plan.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">5. Verify your phone number</div>
+          <div class="topic-card-desc">AWS calls or texts a verification code to confirm you're a real person.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">6. Choose Free Plan & a Support plan</div>
+          <div class="topic-card-desc">Pick the <strong>Free Plan</strong> (not Paid) if you're just learning, and select the free "Basic Support" plan.</div>
+        </div>
+      </div>
+
+      <p style="color:var(--gray-500); font-size:14px; margin:20px 0 12px;"><strong>Do these two things immediately after your account is created</strong> — they take 5 minutes and prevent almost every "surprise bill" story you'll read online:</p>
+      <div class="code-block">
+<span class="comment"># 1. Set a billing alarm so you get emailed BEFORE you spend real money</span>
+aws budgets create-budget \
+  --account-id YOUR_ACCOUNT_ID \
+  --budget <span class="string">'{"BudgetName":"MyFirstBudget","BudgetLimit":{"Amount":"5","Unit":"USD"},"TimeUnit":"MONTHLY","BudgetType":"COST"}'</span> \
+  --notifications-with-subscribers <span class="string">'[{"Notification":{"NotificationType":"ACTUAL","ComparisonOperator":"GREATER_THAN","Threshold":80},"Subscribers":[{"SubscriptionType":"EMAIL","Address":"you@email.com"}]}]'</span>
+
+<span class="comment"># 2. Always terminate (not just "stop") EC2 instances when you're done practicing</span>
+aws ec2 terminate-instances --instance-ids i-0abc123456
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Practice Questions <span class="tag">20 Original Questions, All 4 Domains</span></h3>
+      <p style="color:var(--gray-500); font-size:14px; margin-bottom:20px;">These are original questions written to match the style, difficulty, and domain weighting of the real CLF-C02 exam — not copied exam content (AWS's actual question bank is confidential, and reproducing leaked questions violates the exam's terms). Use these to check your understanding, then do AWS's own free Official Practice Question Set on Skill Builder for the real thing.</p>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Concepts</span>
+        <div class="quiz-q">Q1. A company currently buys physical servers upfront, sized for their busiest day of the year, even though that peak only happens once a year. Which cloud characteristic solves this problem?</div>
+        <div class="quiz-options">A) High availability<br>B) Elasticity<br>C) Multi-factor authentication<br>D) Data redundancy</div>
+        <div class="quiz-answer"><strong>Answer: B — Elasticity.</strong> Elasticity means capacity automatically grows and shrinks with real demand, so the company pays for peak capacity only when it's actually needed, instead of owning idle servers year-round.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Concepts</span>
+        <div class="quiz-q">Q2. Which AWS Cloud pricing benefit is described as "trading capital expense for variable expense"?</div>
+        <div class="quiz-options">A) You still pay large upfront costs, just spread monthly<br>B) You stop buying data centers and instead pay only for what you consume<br>C) You get free servers for the first year<br>D) You must commit to a 3-year contract</div>
+        <div class="quiz-answer"><strong>Answer: B.</strong> Instead of large upfront capital expenditure (CapEx) on hardware, you pay AWS a variable operating expense (OpEx) based on actual usage — one of AWS's six core advantages of cloud computing.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Concepts</span>
+        <div class="quiz-q">Q3. Which deployment model keeps some workloads on a company's own on-premises data center while running others on AWS?</div>
+        <div class="quiz-options">A) Public cloud<br>B) Private cloud<br>C) Hybrid cloud<br>D) Multi-cloud</div>
+        <div class="quiz-answer"><strong>Answer: C — Hybrid cloud.</strong> Hybrid connects on-premises infrastructure with AWS, often used during a gradual migration or when certain data must legally stay on-site.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Concepts</span>
+        <div class="quiz-q">Q4. Under the AWS Well-Architected Framework, which pillar focuses specifically on stopping and recovering from failures automatically?</div>
+        <div class="quiz-options">A) Cost Optimization<br>B) Reliability<br>C) Performance Efficiency<br>D) Operational Excellence</div>
+        <div class="quiz-answer"><strong>Answer: B — Reliability.</strong> The Reliability pillar covers a system's ability to recover from infrastructure or service disruptions and automatically scale to meet demand.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Concepts</span>
+        <div class="quiz-q">Q5. A startup wants to launch in a new country and have low latency for local users without building a new data center. What AWS concept enables this?</div>
+        <div class="quiz-options">A) Auto Scaling Groups<br>B) Global Regions and Edge Locations<br>C) IAM Roles<br>D) Reserved Instances</div>
+        <div class="quiz-answer"><strong>Answer: B.</strong> AWS's global footprint of Regions and Edge Locations lets you deploy close to users anywhere in the world in minutes — "go global in minutes" is one of AWS's stated cloud advantages.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Security & Compliance</span>
+        <div class="quiz-q">Q6. Under the AWS Shared Responsibility Model, who is responsible for patching the underlying hypervisor that runs EC2?</div>
+        <div class="quiz-options">A) The customer<br>B) AWS<br>C) A third-party auditor<br>D) Both equally, split 50/50</div>
+        <div class="quiz-answer"><strong>Answer: B — AWS.</strong> AWS is responsible for "security OF the cloud" (hardware, hypervisor, physical facilities). The customer is responsible for "security IN the cloud" (OS patches, data, IAM configuration, network settings on their own resources).</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Security & Compliance</span>
+        <div class="quiz-q">Q7. Which of these is considered a security best practice for the AWS account root user?</div>
+        <div class="quiz-options">A) Use the root user for daily administrative tasks<br>B) Share the root credentials with the whole DevOps team<br>C) Enable MFA on it and avoid using it for everyday work<br>D) Disable it entirely so no one can ever log in</div>
+        <div class="quiz-answer"><strong>Answer: C.</strong> AWS recommends enabling multi-factor authentication (MFA) on the root user, locking away its credentials, and creating individual IAM users/roles for daily work instead.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Security & Compliance</span>
+        <div class="quiz-q">Q8. A company needs to give an application running on EC2 permission to read from an S3 bucket, without storing any long-term access keys on the instance. What should they use?</div>
+        <div class="quiz-options">A) An IAM user with an access key stored in the app's code<br>B) An IAM role attached to the EC2 instance<br>C) The account root user's credentials<br>D) A public S3 bucket policy allowing anyone access</div>
+        <div class="quiz-answer"><strong>Answer: B — IAM role.</strong> Roles provide temporary, automatically-rotated credentials to an EC2 instance — the recommended way to grant AWS service-to-service permissions, avoiding hardcoded long-term keys entirely.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Security & Compliance</span>
+        <div class="quiz-q">Q9. Which AWS service centrally records every API call made in an account, including who made it and when, for audit purposes?</div>
+        <div class="quiz-options">A) Amazon CloudWatch<br>B) AWS CloudTrail<br>C) AWS Config<br>D) Amazon Inspector</div>
+        <div class="quiz-answer"><strong>Answer: B — CloudTrail.</strong> CloudTrail logs API activity (the "who did what, when") for governance and audit. CloudWatch, by contrast, focuses on operational metrics and performance monitoring.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Security & Compliance</span>
+        <div class="quiz-q">Q10. What is the principle of least privilege?</div>
+        <div class="quiz-options">A) Giving every user AdministratorAccess so nothing is ever blocked<br>B) Granting only the exact permissions a user or service needs to do its job, nothing more<br>C) Rotating passwords every 90 days<br>D) Encrypting all data at rest</div>
+        <div class="quiz-answer"><strong>Answer: B.</strong> Least privilege means starting with zero access and adding only the specific permissions required — reducing the damage possible if credentials are ever compromised.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Security & Compliance</span>
+        <div class="quiz-q">Q11. Which AWS service would you use to centrally store and automatically rotate a database password used by an application?</div>
+        <div class="quiz-options">A) AWS Secrets Manager<br>B) Amazon S3<br>C) AWS Trusted Advisor<br>D) Amazon Route 53</div>
+        <div class="quiz-answer"><strong>Answer: A — Secrets Manager.</strong> It securely stores secrets like DB credentials and can automatically rotate them on a schedule, unlike S3 (object storage) or Route 53 (DNS).</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Technology & Services</span>
+        <div class="quiz-q">Q12. A company needs a database that can flexibly store JSON-like records at massive scale with single-digit millisecond latency, and doesn't need complex SQL joins. What should they choose?</div>
+        <div class="quiz-options">A) Amazon RDS<br>B) Amazon DynamoDB<br>C) Amazon Redshift<br>D) Amazon EFS</div>
+        <div class="quiz-answer"><strong>Answer: B — DynamoDB.</strong> DynamoDB is AWS's fully managed NoSQL database, built for flexible schemas and very high scale/performance — a better fit than a relational engine like RDS when there's no need for SQL joins.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Technology & Services</span>
+        <div class="quiz-q">Q13. Which storage class in S3 is most cost-effective for data that is rarely accessed but must be retrievable within minutes if needed?</div>
+        <div class="quiz-options">A) S3 Standard<br>B) S3 Glacier Deep Archive<br>C) S3 Standard-Infrequent Access (S3 Standard-IA)<br>D) S3 Intelligent-Tiering only</div>
+        <div class="quiz-answer"><strong>Answer: C — S3 Standard-IA.</strong> It's designed for infrequently accessed data that still needs fast, millisecond retrieval — cheaper storage than Standard, but with a retrieval fee. Glacier Deep Archive is cheaper still, but retrieval can take hours, not minutes.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Technology & Services</span>
+        <div class="quiz-q">Q14. What is the primary purpose of an Amazon VPC?</div>
+        <div class="quiz-options">A) To host static websites<br>B) To provide an isolated, private virtual network within AWS where you control IP ranges, subnets, and routing<br>C) To automatically scale EC2 instances<br>D) To manage DNS records for a domain</div>
+        <div class="quiz-answer"><strong>Answer: B.</strong> A VPC is your own logically isolated section of the AWS cloud, letting you define IP address ranges, subnets, route tables, and gateways exactly as needed.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Technology & Services</span>
+        <div class="quiz-q">Q15. A team wants to run code in response to file uploads, without provisioning or managing any servers. Which service fits?</div>
+        <div class="quiz-options">A) Amazon EC2<br>B) AWS Lambda<br>C) Amazon RDS<br>D) AWS Direct Connect</div>
+        <div class="quiz-answer"><strong>Answer: B — Lambda.</strong> Lambda runs your code only when triggered (like an S3 file upload event), with zero server management — the definition of serverless compute.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Technology & Services</span>
+        <div class="quiz-q">Q16. Which service would best help distribute a website's static assets globally with low latency for users far from the origin server?</div>
+        <div class="quiz-options">A) Amazon CloudFront<br>B) AWS Direct Connect<br>C) Amazon EBS<br>D) AWS Snowball</div>
+        <div class="quiz-answer"><strong>Answer: A — CloudFront.</strong> CloudFront is AWS's CDN — it caches content at edge locations close to users worldwide, reducing latency versus serving every request from a single origin.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Cloud Technology & Services</span>
+        <div class="quiz-q">Q17. Which AWS service is purpose-built to run and manage containerized applications without needing to manually manage the underlying EC2 servers (using Fargate)?</div>
+        <div class="quiz-options">A) AWS Lambda<br>B) Amazon ECS with Fargate<br>C) Amazon S3<br>D) Amazon Route 53</div>
+        <div class="quiz-answer"><strong>Answer: B.</strong> ECS with the Fargate launch type runs containers without you provisioning or managing any EC2 instances — AWS handles the underlying compute entirely.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Billing, Pricing & Support</span>
+        <div class="quiz-q">Q18. Which AWS Support plan is the minimum tier available, included free with every account?</div>
+        <div class="quiz-options">A) Developer<br>B) Business<br>C) Basic<br>D) Enterprise</div>
+        <div class="quiz-answer"><strong>Answer: C — Basic.</strong> Basic Support is free for every AWS account and includes access to documentation, whitepapers, and support forums, but not direct technical support cases.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Billing, Pricing & Support</span>
+        <div class="quiz-q">Q19. A company wants a tool that gives automated, personalized recommendations to reduce cost, improve security, and increase performance across their account. What should they use?</div>
+        <div class="quiz-options">A) AWS Trusted Advisor<br>B) Amazon CloudWatch<br>C) AWS Budgets<br>D) AWS Cost Explorer</div>
+        <div class="quiz-answer"><strong>Answer: A — Trusted Advisor.</strong> Trusted Advisor scans your account and gives specific recommendations across cost optimization, security, fault tolerance, performance, and service limits.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Billing, Pricing & Support</span>
+        <div class="quiz-q">Q20. Which purchasing option offers the largest discount for EC2, in exchange for accepting that AWS can reclaim the capacity with short notice?</div>
+        <div class="quiz-options">A) On-Demand Instances<br>B) Reserved Instances<br>C) Spot Instances<br>D) Dedicated Hosts</div>
+        <div class="quiz-answer"><strong>Answer: C — Spot Instances.</strong> Spot Instances offer up to ~90% off On-Demand pricing by using AWS's spare capacity, but AWS can interrupt them with a 2-minute warning — good for fault-tolerant, flexible workloads only.</div>
+      </div>
+    </div>
+  </section>
+
+
 
 
 
