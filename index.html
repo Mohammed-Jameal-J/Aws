@@ -669,7 +669,9 @@
     .sub-section { margin-top: 32px; }
     .sub-section h3 { font-size: 17px; flex-wrap: wrap; gap: 8px; }
     .def-en, .def-ta { padding: 18px 20px; }
-    .example-box, .diagram { padding: 18px 20px; }
+    .example-box, .diagram, .quiz-item { padding: 16px 18px; }
+    .quiz-q { font-size: 14px; }
+    .quiz-options, .quiz-answer { font-size: 12.5px; }
     .topics-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     .topic-card { padding: 16px 18px; }
     .code-block { padding: 16px 18px; font-size: 11px; }
@@ -787,6 +789,7 @@
   <a href="#toolguide" class="nav-item">🧭 Which Tool, When? <span class="nav-badge">ref</span></a>
 
   <div class="nav-section-label">Career</div>
+  <a href="#interview" class="nav-item">💼 Interview Questions <span class="nav-badge">ref</span></a>
   <a href="#certification" class="nav-item">🎓 Certification Roadmap <span class="nav-badge">ref</span></a>
 
 </nav>
@@ -802,10 +805,10 @@
       Complete guide from zero to production — every concept explained in English &amp; Tamil, with real-world examples and architecture diagrams.
     </p>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">44</span><span class="stat-label">Modules</span></div>
+      <div class="stat"><span class="stat-num">45</span><span class="stat-label">Modules</span></div>
       <div class="stat"><span class="stat-num">2</span><span class="stat-label">Languages</span></div>
-      <div class="stat"><span class="stat-num">20</span><span class="stat-label">Diagrams</span></div>
-      <div class="stat"><span class="stat-num">35+</span><span class="stat-label">Code Blocks</span></div>
+      <div class="stat"><span class="stat-num">22</span><span class="stat-label">Diagrams</span></div>
+      <div class="stat"><span class="stat-num">36+</span><span class="stat-label">Code Blocks</span></div>
     </div>
   </section>
 
@@ -994,22 +997,22 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>What It Does</th><th>AWS</th><th>Microsoft Azure</th><th>Google Cloud</th></tr>
+            <tr><th>What It Does</th><th>AWS</th><th>Microsoft Azure</th><th>Google Cloud</th><th>Zoho</th></tr>
           </thead>
           <tbody>
-            <tr><td>Virtual server (rent a computer)</td><td>EC2</td><td>Virtual Machines</td><td>Compute Engine</td></tr>
-            <tr><td>Object storage (files, images, backups)</td><td>S3</td><td>Blob Storage</td><td>Cloud Storage</td></tr>
-            <tr><td>Distribute traffic across servers</td><td>ELB / ALB / NLB</td><td>Azure Load Balancer / Application Gateway</td><td>Cloud Load Balancing</td></tr>
-            <tr><td>Managed relational database</td><td>RDS</td><td>Azure SQL Database</td><td>Cloud SQL</td></tr>
-            <tr><td>Run code without servers</td><td>Lambda</td><td>Azure Functions</td><td>Cloud Functions</td></tr>
-            <tr><td>Managed Kubernetes</td><td>EKS</td><td>AKS</td><td>GKE</td></tr>
-            <tr><td>Private network</td><td>VPC</td><td>Virtual Network (VNet)</td><td>VPC</td></tr>
-            <tr><td>Identity & access control</td><td>IAM</td><td>Azure Active Directory / Entra ID</td><td>Cloud IAM</td></tr>
+            <tr><td>Virtual server (rent a computer)</td><td>EC2</td><td>Virtual Machines</td><td>Compute Engine</td><td>Not offered publicly</td></tr>
+            <tr><td>Object / file storage</td><td>S3</td><td>Blob Storage</td><td>Cloud Storage</td><td>Catalyst File Store / Zoho WorkDrive</td></tr>
+            <tr><td>Distribute traffic across servers</td><td>ELB / ALB / NLB</td><td>Azure Load Balancer / Application Gateway</td><td>Cloud Load Balancing</td><td>Not offered publicly</td></tr>
+            <tr><td>Managed database</td><td>RDS / DynamoDB</td><td>Azure SQL Database</td><td>Cloud SQL</td><td>Catalyst Data Store (SQL) + NoSQL option</td></tr>
+            <tr><td>Run code without servers</td><td>Lambda</td><td>Azure Functions</td><td>Cloud Functions</td><td>Catalyst Functions</td></tr>
+            <tr><td>Managed Kubernetes</td><td>EKS</td><td>AKS</td><td>GKE</td><td>Not offered</td></tr>
+            <tr><td>Private network</td><td>VPC</td><td>Virtual Network (VNet)</td><td>VPC</td><td>Not applicable</td></tr>
+            <tr><td>Identity & access control</td><td>IAM</td><td>Azure Active Directory / Entra ID</td><td>Cloud IAM</td><td>Zoho Directory (Zoho apps only)</td></tr>
           </tbody>
         </table>
       </div>
       <div class="example-box" style="margin-top:16px;">
-        <p><strong>Note on Zoho:</strong> Zoho is not really in the same category as AWS, Azure, or Google Cloud. Zoho is primarily a <strong>SaaS company</strong> — it builds ready-to-use business apps (Zoho Mail, Zoho CRM, Zoho Books) that run on its own infrastructure. It doesn't sell general-purpose IaaS building blocks like "rent a virtual server" or "rent object storage" to the public the way AWS/Azure/GCP do. So if someone mentions Zoho alongside AWS/Azure/GCP, they're usually comparing a finished product (SaaS) to raw infrastructure (IaaS) — useful to know, but not a like-for-like comparison.</p>
+        <p><strong>Note on Zoho:</strong> Zoho is primarily a <strong>SaaS company</strong> — ready-to-use business apps (Zoho Mail, CRM, Books) running on its own infrastructure, not a general-purpose public cloud like AWS/Azure/GCP. The one genuine exception is <strong>Zoho Catalyst</strong>, Zoho's own backend-as-a-service platform — it offers serverless Functions, a managed Data Store (SQL + NoSQL), and a File Store, which really is comparable to a small slice of AWS (roughly Lambda + RDS/DynamoDB + S3 combined). But Catalyst is built to serve the Zoho ecosystem (CRM, Creator, Books) — it doesn't offer raw virtual servers, VPCs, or Kubernetes the way AWS does. So: for "rent a business app," compare Zoho to AWS's SaaS partners; for "build a serverless backend," Catalyst is a fair (much smaller-scale) comparison to Lambda; for "rent raw infrastructure," Zoho isn't in that race at all.</p>
       </div>
     </div>
   </section>
@@ -1332,7 +1335,55 @@ aws s3 website s3://my-app-bucket-pondicherry/ \
   --index-document index.html \
   --error-document 404.html
 
-<span class="comment"># URL: http://my-app-bucket-pondicherry.s3-website.ap-south-1.amazonaws.com</span>
+<span class="comment">    </div>
+
+    <div class="diagram">
+      <div class="diagram-title">📦 S3 Lifecycle — Bucket, Object & Storage Classes</div>
+      <svg class="diagram-svg" viewBox="0 0 660 220" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .s3-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+          .s3-white { fill: #ccc; }
+        </style>
+        <rect x="20" y="70" width="130" height="70" rx="6" fill="#111" stroke="#2a2a2a"/>
+        <text x="85" y="98" text-anchor="middle" class="s3-text s3-white" style="font-size:15px;">📦 Bucket</text>
+        <text x="85" y="116" text-anchor="middle" class="s3-text">my-app-assets</text>
+        <text x="85" y="130" text-anchor="middle" class="s3-text" fill="#555">globally unique name</text>
+
+        <line x1="150" y1="105" x2="195" y2="105" stroke="#444" stroke-width="1.3"/>
+        <polygon points="195,101 205,105 195,109" fill="#444"/>
+
+        <rect x="205" y="30" width="140" height="150" rx="6" fill="none" stroke="#2a2a2a" stroke-dasharray="5,4"/>
+        <text x="275" y="20" text-anchor="middle" class="s3-text" fill="#555">Objects Inside</text>
+        <rect x="220" y="45" width="110" height="34" rx="4" fill="#1a1a1a" stroke="#333"/>
+        <text x="275" y="66" text-anchor="middle" class="s3-text">photo.jpg</text>
+        <rect x="220" y="88" width="110" height="34" rx="4" fill="#1a1a1a" stroke="#333"/>
+        <text x="275" y="109" text-anchor="middle" class="s3-text">video.mp4</text>
+        <rect x="220" y="131" width="110" height="34" rx="4" fill="#1a1a1a" stroke="#333"/>
+        <text x="275" y="152" text-anchor="middle" class="s3-text">backup.zip</text>
+
+        <line x1="345" y1="105" x2="390" y2="105" stroke="#444" stroke-width="1.3" stroke-dasharray="3,2"/>
+        <text x="367" y="95" text-anchor="middle" class="s3-text" fill="#555" style="font-size:8px;">Lifecycle Rule</text>
+        <polygon points="390,101 400,105 390,109" fill="#444"/>
+
+        <rect x="400" y="30" width="90" height="45" rx="5" fill="#1a1a1a" stroke="#333"/>
+        <text x="445" y="49" text-anchor="middle" class="s3-text s3-white" style="font-size:9px;">Standard</text>
+        <text x="445" y="63" text-anchor="middle" class="s3-text" fill="#555" style="font-size:8px;">Frequent access</text>
+
+        <line x1="445" y1="75" x2="445" y2="93" stroke="#333" stroke-width="1"/>
+        <rect x="400" y="93" width="90" height="45" rx="5" fill="#1a1a1a" stroke="#333"/>
+        <text x="445" y="112" text-anchor="middle" class="s3-text s3-white" style="font-size:9px;">Standard-IA</text>
+        <text x="445" y="126" text-anchor="middle" class="s3-text" fill="#555" style="font-size:8px;">30+ days unused</text>
+
+        <line x1="445" y1="138" x2="445" y2="156" stroke="#333" stroke-width="1"/>
+        <rect x="400" y="156" width="90" height="45" rx="5" fill="#1a1a1a" stroke="#333"/>
+        <text x="445" y="175" text-anchor="middle" class="s3-text s3-white" style="font-size:9px;">Glacier</text>
+        <text x="445" y="189" text-anchor="middle" class="s3-text" fill="#555" style="font-size:8px;">90+ days, archive</text>
+
+        <text x="570" y="70" class="s3-text" fill="#666">Each object gets a</text>
+        <text x="570" y="86" class="s3-text" fill="#666">unique HTTPS URL —</text>
+        <text x="570" y="102" class="s3-text" fill="#666">served directly or</text>
+        <text x="570" y="118" class="s3-text" fill="#666">via CloudFront CDN</text>
+      </svg>
     </div>
   </section>
 
@@ -1610,6 +1661,44 @@ aws kms encrypt \
 <span class="comment"># Enable automatic yearly key rotation</span>
 aws kms enable-key-rotation --key-id alias/prod-app-key
       </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Envelope Encryption <span class="tag">How It Actually Works</span></h3>
+      <div class="diagram">
+        <div class="diagram-title">🗝️ Envelope Encryption Flow</div>
+        <svg class="diagram-svg" viewBox="0 0 660 160" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .km-text { font-family: 'JetBrains Mono', monospace; fill: #777; font-size: 10px; }
+            .km-white { fill: #ccc; }
+          </style>
+          <rect x="10" y="55" width="120" height="55" rx="6" fill="#111" stroke="#333"/>
+          <text x="70" y="78" text-anchor="middle" class="km-text km-white">📄 Your Data</text>
+          <text x="70" y="94" text-anchor="middle" class="km-text">e.g. a file</text>
+
+          <line x1="130" y1="82" x2="175" y2="82" stroke="#555" stroke-width="1.2"/>
+          <polygon points="175,78 185,82 175,86" fill="#555"/>
+
+          <rect x="185" y="55" width="140" height="55" rx="6" fill="#1a1a1a" stroke="#333"/>
+          <text x="255" y="76" text-anchor="middle" class="km-text km-white">🔑 Data Key</text>
+          <text x="255" y="92" text-anchor="middle" class="km-text">encrypts your data</text>
+
+          <line x1="325" y1="82" x2="370" y2="82" stroke="#555" stroke-width="1.2"/>
+          <polygon points="370,78 380,82 370,86" fill="#555"/>
+
+          <rect x="380" y="20" width="150" height="120" rx="6" fill="none" stroke="#2a2a2a" stroke-dasharray="5,4"/>
+          <text x="455" y="12" text-anchor="middle" class="km-text" fill="#555">Never leaves KMS</text>
+          <rect x="395" y="45" width="120" height="70" rx="6" fill="#111" stroke="#333"/>
+          <text x="455" y="72" text-anchor="middle" class="km-text km-white">🗝️ KMS Master Key</text>
+          <text x="455" y="90" text-anchor="middle" class="km-text">encrypts the Data Key</text>
+
+          <line x1="530" y1="80" x2="575" y2="80" stroke="#555" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <text x="600" y="72" class="km-text" fill="#666" style="font-size:9px;">Encrypted</text>
+          <text x="600" y="86" class="km-text" fill="#666" style="font-size:9px;">data key stored</text>
+          <text x="600" y="100" class="km-text" fill="#666" style="font-size:9px;">alongside data</text>
+        </svg>
+      </div>
+      <p style="color:var(--gray-500); font-size:13px; margin-top:8px;">The master key in KMS never leaves AWS — it only ever encrypts/decrypts the small "data key," which does the actual heavy-lifting encryption of your real data. This is what makes KMS fast even for huge files.</p>
     </div>
   </section>
 
@@ -2120,6 +2209,10 @@ aws elasticache create-cache-cluster \
         <div class="topic-card-title">Weighted Routing</div>
         <div class="topic-card-desc">Send 10% of traffic to new version, 90% to old. Perfect for canary deployments / A-B testing new features safely.</div>
       </div>
+    </div>
+
+    <div class="example-box" style="margin-top:24px;">
+      <p><strong>Zomato-style Failover:</strong> An online food delivery app runs its primary API in Mumbai (ap-south-1) and keeps a standby copy in Hyderabad (ap-south-2). Route 53 health-checks the Mumbai endpoint every 30 seconds. The moment Mumbai stops responding — say, during an AZ outage — Route 53 automatically flips DNS to the Hyderabad backup within about a minute, with zero manual intervention and no app code changes needed.</p>
     </div>
   </section>
 
@@ -3219,6 +3312,10 @@ docker push 123456789.dkr.ecr.ap-south-1.amazonaws.com/my-app-backend:latest
   }]
 }
     </div>
+
+    <div class="example-box">
+      <p><strong>Migrating from a Monolith:</strong> A logistics startup runs a single large Node.js app on 2 big EC2 instances. They containerize it, split it into an API service and a background-worker service, and deploy both to ECS Fargate. Now each part scales independently — the API service jumps from 3 to 10 tasks during a delivery rush while the worker service stays flat — and neither team touches a raw EC2 instance ever again.</p>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════
@@ -3352,6 +3449,10 @@ spec:
   - port: 80
     targetPort: 8000
     </div>
+
+    <div class="example-box">
+      <p><strong>Multi-Team Platform:</strong> A fintech company with 15 microservices, owned by 5 different teams, standardizes on EKS so every team deploys the same way regardless of language (Go, Python, Java) — using the same kubectl commands, the same Helm charts, and the same monitoring. Because it's standard Kubernetes, they could theoretically move to Google's GKE or run on-prem without rewriting deployment configs — a portability AWS-specific ECS doesn't offer.</p>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════
@@ -3480,6 +3581,10 @@ aws cloudwatch put-metric-alarm \
   --comparison-operator GreaterThanThreshold \
   --evaluation-periods 1 \
   --alarm-actions <span class="string">"arn:aws:sns:ap-south-1:123:DevOpsAlert"</span>
+    </div>
+
+    <div class="example-box">
+      <p><strong>On-Call Wake-Up Call:</strong> An on-call engineer at a payments company sleeps easy because CloudWatch watches their ALB's 5XX error rate continuously. One night, a bad deploy causes error rates to spike past the alarm threshold — CloudWatch fires an alarm, which triggers SNS, which pages the on-call engineer's phone within 2 minutes of the first errors, long before customers start complaining on Twitter.</p>
     </div>
   </section>
 
@@ -4354,6 +4459,10 @@ aws backup create-backup-plan \
         </div>
       </div>
     </div>
+
+    <div class="example-box">
+      <p><strong>A Real Tuesday:</strong> At 9 AM, a Bengaluru-based fintech's SRE checks overnight batch job dashboards — all green. At 11 AM, a PR adds a new Redis cache in front of RDS; the team reviews the Terraform plan diff before approving. At 2 PM, the merge auto-deploys through the pipeline to staging, then production, with zero manual steps. At 6 PM, a CloudWatch alarm pages someone about elevated Lambda cold starts — they check the logs, find a memory setting too low, bump it via a one-line Terraform change, and redeploy. That's the whole loop, every day.</p>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════
@@ -4955,13 +5064,214 @@ aws lambda update-function-code \
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       MODULE 44 — AWS CERTIFICATION ROADMAP
+       MODULE 44 — INTERVIEW QUESTIONS
+  ══════════════════════════════════════════════════════ -->
+  <section class="module" id="interview">
+    <div class="module-header">
+      <div class="module-icon">💼</div>
+      <div class="module-meta">
+        <div class="module-tag">Module 44 · Career</div>
+        <h2>AWS / DevOps Interview Questions</h2>
+        <div class="module-subtitle">25 Real Interview Questions with Model Answers</div>
+      </div>
+    </div>
+
+    <span class="level-badge level-advanced">⬤ Reference</span>
+
+    <div class="def-box">
+      <div class="def-en">
+        <div class="def-lang">English</div>
+        <p class="def-text">These are the kinds of questions actually asked in AWS/Cloud/DevOps interviews — from fresher-level fundamentals to experienced-level system design. Each answer is written the way you'd actually say it out loud, not a textbook definition. Practice saying these in your own words before the interview, don't memorize them verbatim.</p>
+      </div>
+      <div class="def-ta">
+        <div class="def-lang">தமிழ்</div>
+        <p class="def-text">இவை AWS/Cloud/DevOps interviews-ல் real-ஆக கேட்கப்படும் வகையான கேள்விகள் — fresher fundamentals முதல் experienced system design வரை. ஒவ்வொரு பதிலும் நீங்கள் பேசுவது போலவே எழுதப்பட்டுள்ளது, textbook definition இல்லை. Interview-க்கு முன் இதை உங்கள் சொந்த வார்த்தைகளில் சொல்லிப் பழகுங்கள், அப்படியே மனப்பாடம் செய்யாதீர்கள்.</p>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Fundamentals <span class="tag">Fresher Level</span></h3>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Fresher</span>
+        <div class="quiz-q">Q1. What is cloud computing, in your own words?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Cloud computing is renting computing resources — servers, storage, databases — over the internet instead of buying and maintaining your own physical hardware. You pay only for what you use, it scales up or down on demand, and someone else (AWS) handles the physical infrastructure, power, and cooling.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Fresher</span>
+        <div class="quiz-q">Q2. What's the difference between IaaS, PaaS, and SaaS? Give an AWS example of each.</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> IaaS gives you raw infrastructure — you manage the OS and everything above it (EC2). PaaS gives you a managed platform where you just deploy code (Elastic Beanstalk). SaaS is a finished product you just use (Gmail, or AWS's own QuickSight). Moving from IaaS to SaaS, you get less control but AWS manages more for you.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Fresher</span>
+        <div class="quiz-q">Q3. What is the AWS Shared Responsibility Model?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> AWS is responsible for "security OF the cloud" — physical data centers, hardware, the hypervisor. I'm responsible for "security IN the cloud" — my data, IAM permissions, OS patches on my EC2 instances, network configuration. It's a shared split, and where the line falls shifts depending on the service — for Lambda, AWS manages even more since there's no OS for me to touch.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Fresher</span>
+        <div class="quiz-q">Q4. Why would a company migrate from their own data center to AWS?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Mainly to trade a large upfront capital cost for a variable operating cost — no more buying servers sized for peak traffic that sit idle most of the year. Also for elasticity (scale instantly for traffic spikes), global reach (deploy near users worldwide in minutes), and offloading undifferentiated heavy lifting like patching hypervisors, so the team can focus on the actual product.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Fresher</span>
+        <div class="quiz-q">Q5. What's the difference between a Region and an Availability Zone?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> A Region is a geographic area, like Mumbai (ap-south-1). Inside that Region, there are multiple Availability Zones — physically separate data centers with independent power and networking. I spread resources across AZs so that if one data center has an outage, my app keeps running from another AZ in the same Region.</div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Compute & Storage <span class="tag">Intermediate</span></h3>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q6. When would you choose Lambda over EC2, and vice versa?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> I'd reach for Lambda when the workload is event-driven, short-lived (under 15 minutes), and traffic is unpredictable or spiky — I don't want to pay for idle capacity. I'd choose EC2 when I need long-running processes, full control over the OS/runtime, specialized hardware (GPUs), or predictable steady-state traffic where a reserved EC2 instance is actually cheaper than paying per-invocation.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q7. Explain the difference between ECS and EKS. Which would you pick and why?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Both run containers, but ECS is AWS's own proprietary orchestrator — simpler to learn, tightly integrated with AWS, but locked to AWS. EKS is managed Kubernetes — steeper learning curve, but it's the industry-standard API, so skills and configs port to any cloud or on-prem. I'd pick ECS for a small team wanting simplicity and pure AWS, and EKS if the team already knows Kubernetes or portability/multi-cloud is a real requirement, not just a nice-to-have.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q8. What are S3 storage classes and how would you use Lifecycle rules to control cost?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> S3 Standard is for frequently accessed data. Standard-IA is cheaper storage for data accessed rarely but needed fast. Glacier and Glacier Deep Archive are for long-term archives, cheapest storage, but retrieval takes minutes to hours. I'd set a Lifecycle rule that moves objects from Standard to Standard-IA after 30 days of no access, then to Glacier after 90 days — so old logs or backups age into cheaper tiers automatically without anyone manually managing it.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q9. What's the difference between EBS, EFS, and S3?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> EBS is block storage attached to exactly one EC2 instance — like a virtual hard disk, used for OS/databases. EFS is a network file system multiple EC2 instances can mount simultaneously — a shared drive. S3 is object storage accessed over HTTP/API from anywhere, not mounted as a filesystem, best for files, backups, and static content at any scale.</div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Networking & Security <span class="tag">Intermediate → Advanced</span></h3>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q10. What is a VPC, and what's the difference between a public and private subnet?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> A VPC is my own isolated private network inside AWS, where I control IP ranges, subnets, and routing. A public subnet has a route to an Internet Gateway, so resources there can be reached from the internet (like a load balancer). A private subnet has no direct route to the internet — resources there (like a database) can only be reached from inside the VPC, which is safer for anything that shouldn't be publicly exposed.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q11. Is an AWS Application Load Balancer the same as an Nginx reverse proxy?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> They overlap but aren't the same. ALB is fully managed by AWS — it auto-scales, spans multiple AZs, and has zero servers for me to patch. Nginx as a reverse proxy is software I install and manage myself — much more configurable (custom caching, rewrites), but I'm responsible for scaling and availability. In practice, they're often used together — ALB at the edge, Nginx on individual instances for fine-grained local routing.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q12. Explain the difference between an IAM user, an IAM role, and an IAM policy.</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> A policy is a JSON document that defines permissions — what actions are allowed on what resources. A user is a permanent identity for a person, with long-term credentials, that a policy can attach to. A role is a temporary identity that anything — an EC2 instance, a Lambda function, even another AWS account — can assume to get short-lived credentials. I always prefer roles for service-to-service access over hardcoding a user's access keys.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q13. What is the principle of least privilege, and how do you apply it practically?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> It means granting only the exact permissions needed to do a job, nothing more. Practically: I start every new IAM policy with zero permissions and add specific actions/resources as they're actually needed, rather than starting from AdministratorAccess and trying to restrict later. I also scope policies to specific resource ARNs instead of using "*" wherever possible, and review unused permissions periodically with IAM Access Analyzer.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q14. How do you securely manage secrets like database passwords in AWS?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Never hardcoded in code or committed to Git. I use Secrets Manager for anything that needs automatic rotation, like a database password — it can rotate on a schedule and update RDS without downtime. For simpler config values that don't rotate, SSM Parameter Store works and is free. The application fetches secrets at runtime via IAM-controlled API calls, not from environment files sitting on disk.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q15. What's the difference between encryption in transit and encryption at rest, and which AWS services handle each?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Encryption in transit protects data moving over the network — handled by HTTPS/TLS, usually terminated at ACM certificates on an ALB or CloudFront. Encryption at rest protects stored data — handled by KMS keys applied to S3, EBS, RDS, and other storage services. I generally enable both by default; there's rarely a good reason not to.</div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Databases <span class="tag">Intermediate</span></h3>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q16. When would you choose DynamoDB over RDS?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> DynamoDB when I need massive scale, flexible/changing schema, and predictable single-digit millisecond latency — think session stores or IoT event data with simple key-based lookups. RDS when I need complex relationships, multi-table JOINs, and strict ACID transactions — think financial records or anything relational by nature. If I'm not sure the data model needs SQL joins, that's usually a signal DynamoDB is the better fit.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Intermediate</span>
+        <div class="quiz-q">Q17. What's the difference between a Multi-AZ deployment and a Read Replica in RDS?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Multi-AZ is for high availability — it keeps a synchronous standby copy in another AZ purely for failover; you can't read from it directly, and it doesn't help with performance. A Read Replica is for scaling read traffic — an asynchronous copy you can actually query, offloading reporting/analytics reads from the primary. They solve different problems and are often used together.</div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>DevOps & CI/CD <span class="tag">Advanced</span></h3>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q18. What is Infrastructure as Code, and what problem does it actually solve?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> IaC means defining infrastructure — VPCs, EC2, RDS — in version-controlled code files (Terraform or CloudFormation) instead of clicking through the console. It solves reproducibility (spin up an identical environment in minutes), auditability (every change is a Git commit with a reviewer), and eliminates "it worked on my console but I forgot what I clicked" drift between environments.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q19. Explain blue-green deployment vs canary deployment. When would you use each?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Blue-green runs two full identical environments — you switch 100% of traffic from the old (blue) to the new (green) instantly, and can roll back instantly by switching back. Canary sends a small percentage of traffic (say 10%) to the new version first, watches error rates, then gradually ramps up. I'd use blue-green when I need a clean, instant cutover and rollback; canary when I want to catch problems on a small slice of real traffic before fully committing.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Advanced</span>
+        <div class="quiz-q">Q20. Walk me through how you'd design a CI/CD pipeline for a containerized microservice on AWS.</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> On every push to main: CodeBuild (or GitHub Actions) runs unit tests, then builds a Docker image tagged with the Git commit SHA, and pushes it to ECR. A deploy stage then updates the ECS/EKS service to pull that new image, using a rolling or blue-green strategy so there's zero downtime. CloudWatch alarms watch error rates post-deploy, and if they spike, the pipeline auto-rolls-back to the previous task definition.</div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Scenario & System Design <span class="tag">Experienced</span></h3>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Experienced</span>
+        <div class="quiz-q">Q21. Design a highly available, scalable 3-tier web application on AWS. Walk me through your architecture.</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Route 53 for DNS, pointing to CloudFront + S3 for the static frontend. API traffic hits an Application Load Balancer spread across multiple AZs, forwarding to an Auto Scaling Group of EC2 (or ECS tasks) also across multiple AZs — so no single AZ failure takes the app down. The database tier is RDS with Multi-AZ for failover, plus a read replica if read traffic is heavy. ElastiCache sits in front of the database for hot data. Everything logs to CloudWatch, and Secrets Manager holds the DB credentials — no hardcoded secrets anywhere.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Experienced</span>
+        <div class="quiz-q">Q22. It's 2 AM, you're paged because API error rates spiked. Walk me through your troubleshooting steps.</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> First, check the ALB target group health — are instances failing health checks? Then CloudWatch Logs for the actual application error (stack trace tells me a lot fast). Check CloudTrail if it looks like a permissions or config change caused it — did someone deploy or change an IAM policy recently? Check RDS/dependency health too, since a downstream failure often looks like an app error. Fix the immediate issue (rollback if it's a bad deploy), then do a post-incident review to prevent recurrence — usually adding a better alarm or a canary check that would've caught it earlier.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Experienced</span>
+        <div class="quiz-q">Q23. Your team's AWS bill doubled last month with no obvious reason. How do you investigate and reduce it?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> Start in Cost Explorer, break down spend by service and by tag to isolate what actually grew. Common culprits: a forgotten NAT Gateway or idle load balancer running 24/7, an over-provisioned RDS instance, or a runaway Lambda in an infinite retry loop. I'd also check Trusted Advisor's cost recommendations, and look at whether workloads are candidates for Spot Instances or Savings Plans. Going forward, I'd set AWS Budgets alerts so this gets caught at 50% of the anomaly, not after a full billing cycle.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Experienced</span>
+        <div class="quiz-q">Q24. How would you migrate a monolithic on-premises application to AWS with minimal downtime?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> I'd favor a phased "strangler fig" approach over a big-bang cutover. First, replicate data continuously (Database Migration Service for the DB). Stand up the app on AWS in parallel with the on-prem system, validate it works with production-like traffic in a staging test. Use Route 53 weighted routing to shift a small percentage of real traffic over first, watch metrics closely, then gradually increase the AWS share to 100%. Keep the on-prem system as a rollback option until AWS has run cleanly for a full business cycle.</div>
+      </div>
+
+      <div class="quiz-item">
+        <span class="quiz-domain">Experienced</span>
+        <div class="quiz-q">Q25. What's your approach to disaster recovery — how would you decide which DR strategy to use?</div>
+        <div class="quiz-answer"><strong>Model answer:</strong> It comes down to RTO (how fast must we recover) and RPO (how much data loss is acceptable) versus cost. For a low-stakes internal tool, Backup & Restore is fine — cheapest, but recovery takes hours. For something more critical, Pilot Light or Warm Standby keeps a scaled-down copy running in a second region, cutting recovery to minutes. For a system where any downtime is unacceptable — payments, for example — Multi-Site Active-Active runs full capacity in two regions simultaneously, at the highest cost. I'd map the actual business impact of downtime to the cheapest strategy that meets it, not default to the most expensive option everywhere.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MODULE 45 — AWS CERTIFICATION ROADMAP
   ══════════════════════════════════════════════════════ -->
   <section class="module" id="certification">
     <div class="module-header">
       <div class="module-icon">🎓</div>
       <div class="module-meta">
-        <div class="module-tag">Module 44 · Career</div>
+        <div class="module-tag">Module 45 · Career</div>
         <h2>AWS Certification Roadmap</h2>
         <div class="module-subtitle">Where to Learn Free, What It Costs to Get Certified</div>
       </div>
@@ -5210,6 +5520,40 @@ aws ec2 terminate-instances --instance-ids i-0abc123456
     </div>
 
     <div class="sub-section">
+      <h3>How to Apply for the Certification Exam Itself <span class="tag">Booking Your Seat</span></h3>
+      <p style="color:var(--gray-500); font-size:14px; margin-bottom:16px;">This is separate from your AWS account above — this is registering for the actual test. Since January 2023, AWS delivers <strong>all</strong> certification exams exclusively through <strong>Pearson VUE</strong> (PSI is no longer used).</p>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-card-title">1. Create an AWS Certification Account</div>
+          <div class="topic-card-desc">Go to aws.training, sign in with your Amazon/AWS Builder ID, click "Certification" in the top nav.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">2. Click "Schedule New Exam"</div>
+          <div class="topic-card-desc">Find your exam (e.g. Cloud Practitioner CLF-C02) in the catalog and select it.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">3. Choose your delivery method</div>
+          <div class="topic-card-desc">Online proctored from home (OnVUE) or in person at a physical test center — pick whichever fits your setup.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">4. Click "Schedule at Pearson VUE"</div>
+          <div class="topic-card-desc">You're redirected to Pearson VUE's site to pick your exact date, time, and pay the exam fee.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">5. Match your name to your ID exactly</div>
+          <div class="topic-card-desc">The name on your booking must match your government photo ID precisely, or you can be turned away on exam day.</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-card-title">6. Save your confirmation email</div>
+          <div class="topic-card-desc">It has your appointment details and ID rules — you'll need it, especially for online proctoring system checks.</div>
+        </div>
+      </div>
+      <div class="example-box" style="margin-top:16px;">
+        <p><strong>Reschedule/cancel rule:</strong> free up to 24 hours before your slot — miss that window and you forfeit the entire exam fee. If you fail, you must wait 14 calendar days before retaking it, and pay the full fee again each attempt (no attempt limit, though).</p>
+      </div>
+    </div>
+
+    <div class="sub-section">
       <h3>Practice Questions <span class="tag">20 Original Questions, All 4 Domains</span></h3>
       <p style="color:var(--gray-500); font-size:14px; margin-bottom:20px;">These are original questions written to match the style, difficulty, and domain weighting of the real CLF-C02 exam — not copied exam content (AWS's actual question bank is confidential, and reproducing leaked questions violates the exam's terms). Use these to check your understanding, then do AWS's own free Official Practice Question Set on Skill Builder for the real thing.</p>
 
@@ -5360,10 +5704,12 @@ aws ec2 terminate-instances --instance-ids i-0abc123456
 
 
 
+
+
   <footer class="footer">
     AWS MASTER CLASS · Developers &amp; DevOps · Basic → Master<br>
     All concepts explained in English &amp; Tamil · Real-world examples throughout<br>
-    © 2024 · Built with ❤️ for the Tamil Dev Community · Puducherry &amp; Beyond
+    ©2026 · Built with ❤️ for WolfCircuit Dev Community
   </footer>
 
 </main>
